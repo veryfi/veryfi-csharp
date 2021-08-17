@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E793AF18-4371-4EBD-96FC-195EB1798855}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		src\Directory.Build.props = src\Directory.Build.props
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		LICENSE = LICENSE
+		docs\openapi.nswag = docs\openapi.nswag
+		docs\openapi.yaml = docs\openapi.yaml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{F3FD9454-458F-429F-A781-2AD146C82AEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{61E7E11E-4558-434C-ACE8-06316A3097B3}"
+	ProjectSection(SolutionItems) = preProject
+		src\libs\Directory.Build.props = src\libs\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AAA11B78-2764-4520-A97E-46AA7089A588}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veryfi", "src\libs\Veryfi\Veryfi.csproj", "{E4040E14-B83D-454D-ACB8-62BB00659CED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veryfi.IntegrationTests", "src\tests\Veryfi.IntegrationTests\Veryfi.IntegrationTests.csproj", "{07072D05-2C53-496D-B5F2-679C59DE36F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veryfi.Example", "examples\Veryfi.Example\Veryfi.Example.csproj", "{60F0A892-8432-4745-8762-4F75B1B52585}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4040E14-B83D-454D-ACB8-62BB00659CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4040E14-B83D-454D-ACB8-62BB00659CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4040E14-B83D-454D-ACB8-62BB00659CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4040E14-B83D-454D-ACB8-62BB00659CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07072D05-2C53-496D-B5F2-679C59DE36F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07072D05-2C53-496D-B5F2-679C59DE36F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07072D05-2C53-496D-B5F2-679C59DE36F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07072D05-2C53-496D-B5F2-679C59DE36F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60F0A892-8432-4745-8762-4F75B1B52585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60F0A892-8432-4745-8762-4F75B1B52585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60F0A892-8432-4745-8762-4F75B1B52585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60F0A892-8432-4745-8762-4F75B1B52585}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4040E14-B83D-454D-ACB8-62BB00659CED} = {61E7E11E-4558-434C-ACE8-06316A3097B3}
+		{07072D05-2C53-496D-B5F2-679C59DE36F7} = {AAA11B78-2764-4520-A97E-46AA7089A588}
+		{60F0A892-8432-4745-8762-4F75B1B52585} = {F3FD9454-458F-429F-A781-2AD146C82AEE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CED9A020-DBA5-4BE6-8096-75E528648EC1}
+	EndGlobalSection
+EndGlobal
