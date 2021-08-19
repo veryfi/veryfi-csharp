@@ -17,7 +17,7 @@ If you don't have an account with Veryfi, please go ahead and
 register here: [https://hub.veryfi.com/signup/api/](https://hub.veryfi.com/signup/api/)
 
 ### Documentation
-[OpenAPI 3 Specification](https://app.swaggerhub.com/apis/HavenDV/Veryfi/)
+[OpenAPI 3 Specification](https://app.swaggerhub.com/apis/Veryfi/verify-api/)
 
 ## Nuget
 
