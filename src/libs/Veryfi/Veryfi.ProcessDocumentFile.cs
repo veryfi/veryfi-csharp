@@ -66,6 +66,7 @@ namespace Veryfi
                     { new StringContent(fileName), "file_name" },
                     { new StringContent($"{(options.Auto_delete ?? 0)}"), "auto_delete" },
                     { new StringContent($"{options.Boost_mode ?? 0}"), "boost_mode" },
+                    { new StringContent($"{options.Confidence_details ?? 0}"), "confidence_details" },
                     { new StringContent($"{options.Async ?? 0}"), "async" },
                     { new StringContent(options.External_id ?? string.Empty), "external_id" },
                     { new StringContent($"{options.Max_pages_to_process ?? 0}"), "max_pages_to_process" },
