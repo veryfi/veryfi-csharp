@@ -715,6 +715,10 @@ components:
           type: integer
           description: 'Flag that tells Veryfi whether boost mode should be enabled. When set to `1`, Veryfi will skip data enrichment steps, but will process the document faster. Default value for this flag is `0`.'
           example: 1
+        confidence_details:
+          type: integer
+          description: 'Return prediction scores along with values'
+          example: 1
         async:
           type: integer
           description: '123'
