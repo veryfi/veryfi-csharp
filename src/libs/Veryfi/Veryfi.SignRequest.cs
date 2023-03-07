@@ -4,9 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -35,61 +34,48 @@ namespace Veryfi
             {
                 ["timestamp"] = $"{timestamp}",
             };
-            switch (request.Method.Method, url)
+            switch (request.Content)
             {
-                case ("POST", "https://api.veryfi.com/api/v7/partner/documents"):
-                    switch (request.Content)
+                case StringContent stringContent:
+                {
+                    var jsonString = await stringContent.ReadAsStringAsync().ConfigureAwait(false);
+                    var json = JObject.Parse(jsonString);
+                    foreach (var item in json)
                     {
-                        case StringContent stringContent:
+                        var key = item.Key;
+                        var value = item.Value;
+                        if (value == null) continue;
+                        string stringValue;
+                        switch (key)
                         {
-                            var json = await stringContent.ReadAsStringAsync().ConfigureAwait(false);
-                            var options = JsonConvert.DeserializeObject<DocumentUploadOptions>(json, JsonSerializerSettings);
-
-                            arguments.Add("file_name", options?.File_name ?? string.Empty);
-                            arguments.Add("file_data", options?.File_data ?? string.Empty);
-                            arguments.Add("categories", string.Join(",", options?.Categories ?? new List<string>()));
-                            arguments.Add("auto_delete", $"{options?.Auto_delete ?? 0}");
-                            arguments.Add("boost_mode", $"{options?.Boost_mode ?? 0}");
-                            arguments.Add("confidence_details", $"{options?.Confidence_details ?? 0}");
-                            arguments.Add("external_id", options?.External_id ?? string.Empty);
-                            arguments.Add("file_url", options?.File_url ?? string.Empty);
-                            arguments.Add("file_urls", string.Join(",", options?.File_urls ?? new List<string>()));
-                            arguments.Add("max_pages_to_process", $"{options?.Max_pages_to_process ?? 0}");
-                            arguments.Add("tags", string.Join(",", options?.Tags ?? new List<string>()));
-                            arguments.Add("async", $"{options?.Async ?? 0}");
-
-                            break;
+                            case "categories":
+                                stringValue = string.Join(",", value);
+                                break;
+                            case "file_urls":
+                                stringValue = string.Join(",", value);
+                                break;
+                            default:
+                                stringValue = (string) value!;
+                                break;
                         }
-                        case MultipartFormDataContent multipartContent:
-                        {
-                            foreach (var content in multipartContent
-                                .Where(static content => content is StringContent)
-                                .Cast<StringContent>())
-                            {
-                                var key = content.Headers.ContentDisposition.Name;
-                                var value = await content.ReadAsStringAsync().ConfigureAwait(false);
+                        arguments.Add(key, stringValue);
+                    }
+                    break;
+                }
+                case MultipartFormDataContent multipartContent:
+                {
+                    foreach (var content in multipartContent
+                        .Where(static content => content is StringContent)
+                        .Cast<StringContent>())
+                    {
+                        var key = content.Headers.ContentDisposition.Name;
+                        var value = await content.ReadAsStringAsync().ConfigureAwait(false);
 
-                                arguments.Add(key, value);
-                            }
-
-                            break;
-                        }
+                        arguments.Add(key, value);
                     }
 
                     break;
-
-                default:
-                    var match = Regex.Match(
-                        url,
-                        @"(https://api.veryfi.com/api/v7/partner/documents/)(?<documentId>\d+)");
-                    if (!match.Success)
-                    {
-                        break;
-                    }
-
-                    var documentId = match.Groups["documentId"].Value;
-                    arguments.Add("id", documentId);
-                    break;
+                }
             }
             var signature = GenerateSignature(ClientSecret, arguments);
 
@@ -116,5 +102,5 @@ namespace Veryfi
             
             return Convert.ToBase64String(signature);
         }
-}
+    }
 }
