@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 
 namespace Veryfi.IntegrationTests
 {
@@ -12,24 +13,37 @@ namespace Veryfi.IntegrationTests
     {
         private static async Task CheckDocumentAndDeleteAsync(
             VeryfiApi api,
-            Document document,
+            Int64 documentId,
             CancellationToken cancellationToken)
         {
-            document.Should().NotBeNull();
-
-            var documents = await api.GetDocumentsAsync(
+            var documentsResponse = await api.DocumentsAsync(
                 cancellationToken: cancellationToken);
+            
+            var documents = documentsResponse.As<JObject>();
+            documents.Should().NotBeNull();
+            documents.Should().NotBeEmpty();
+            
+            var deleteStatus = await api.Documents5Async(
+                documentId,
+                cancellationToken
+            );
 
-            documents.Should().NotBeNullOrEmpty();
-
-            var deleteStatus = await api.DeleteDocumentAsync(
-                document.Id,
-                cancellationToken);
-
-            deleteStatus.Should().NotBeNull();
-            deleteStatus.Status.Should().Be("ok");
+            deleteStatus.Status.Should().Be(OperationStatusStatus.Ok);
         }
 
+        [TestMethod]
+        public async Task GetDocumentsTest()
+        {
+            await BaseTests.ApiTestAsync(async (api, cancellationToken) =>
+            {
+                var documentsResponse = await api.DocumentsAsync(
+                    cancellationToken: cancellationToken);
+                var documents = documentsResponse.As<JObject>();
+                documents.Should().NotBeNull();
+                documents.Should().NotBeEmpty();
+            });
+        }
+        
         [DataTestMethod]
         [DataRow("invoice1.png")]
         [DataRow("receipt.png")]
@@ -40,20 +54,26 @@ namespace Veryfi.IntegrationTests
             
             await BaseTests.ApiTestAsync(async (api, cancellationToken) =>
             {
-                var document = await api.ProcessDocumentAsync(
-                    new DocumentUploadOptions
-                    {
-                        File_url = url,
-                    },
+                var request = new DocumentPOSTJSONRequest
+                {
+                    File_url = url
+                };
+                var documentResponse = await api.Documents2Async(
+                    request,
                     cancellationToken);
 
+                var document = documentResponse.As<JObject>();
+                document.Should().NotBeNull();
+                document.Should().NotBeEmpty();
+                var documentId = (long) document["id"]!;
+        
                 await CheckDocumentAndDeleteAsync(
                     api,
-                    document,
+                    documentId,
                     cancellationToken);
             });
         }
-
+        
         [TestMethod]
         public async Task ProcessUrlsTest()
         {
@@ -69,20 +89,26 @@ namespace Veryfi.IntegrationTests
                 
             await BaseTests.ApiTestAsync(async (api, cancellationToken) =>
             {
-                var document = await api.ProcessDocumentAsync(
-                    new DocumentUploadOptions
-                    {
-                        File_urls = urls,
-                    },
+                var request = new DocumentPOSTJSONRequest
+                {
+                    File_urls = urls
+                };
+                var documentResponse = await api.Documents2Async(
+                    request,
                     cancellationToken);
-
+                
+                var document = documentResponse.As<JObject>();
+                document.Should().NotBeNull();
+                document.Should().NotBeEmpty();
+                var documentId = (long) document["id"]!;
+        
                 await CheckDocumentAndDeleteAsync(
                     api,
-                    document,
+                    documentId,
                     cancellationToken);
             });
         }
-
+        
         [DataTestMethod]
         [DataRow("invoice1.png")]
         [DataRow("receipt.png")]
@@ -90,45 +116,27 @@ namespace Veryfi.IntegrationTests
         public async Task ProcessBase64Test(string fileName)
         {
             var file = new H.Resource(fileName);
-
+        
             await BaseTests.ApiTestAsync(async (api, cancellationToken) =>
             {
-                var document = await api.ProcessDocumentAsync(
-                    new DocumentUploadOptions
+                string[] categories = { "Meals", "Fat" };
+                var documentResponse = await api.Documents2Async(
+                    new DocumentPOSTJSONRequest
                     {
                         File_name = file.FileName,
                         File_data = Convert.ToBase64String(file.AsBytes()),
+                        Categories = categories
                     },
                     cancellationToken);
-
+                
+                var document = documentResponse.As<JObject>();
+                document.Should().NotBeNull();
+                document.Should().NotBeEmpty();
+                var documentId = (long) document["id"]!;
+        
                 await CheckDocumentAndDeleteAsync(
                     api,
-                    document,
-                    cancellationToken);
-            });
-        }
-
-        [DataTestMethod]
-        [DataRow("invoice1.png")]
-        [DataRow("receipt.png")]
-        [DataRow("receipt_public.jpg")]
-        public async Task ProcessFileTest(string fileName)
-        {
-            var file = new H.Resource(fileName);
-
-            await BaseTests.ApiTestAsync(async (api, cancellationToken) =>
-            {
-                var document = await api.ProcessDocumentFileAsync(
-                    file.AsStream(),
-                    new DocumentUploadOptions
-                    {
-                        File_name = file.FileName,
-                    },
-                    cancellationToken);
-
-                await CheckDocumentAndDeleteAsync(
-                    api,
-                    document,
+                    documentId,
                     cancellationToken);
             });
         }
