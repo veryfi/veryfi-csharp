@@ -1,968 +1,4524 @@
 openapi: 3.0.0
 info:
-  description:  |
-    [https://www.veryfi.com/](https://www.veryfi.com/).
-  version: "7.0.0"
   title: Verify API
+  description: '[https://www.veryfi.com/](https://www.veryfi.com/)'
   contact:
     email: support@veryfi.com
-  license:
-    name: MIT
-    url: 'https://raw.githubusercontent.com/veryfi/veryfi-python/master/LICENSE'
-    
+  version: '1.0'
 servers:
-  - url: 'https://api.veryfi.com/api/v7/partner/'
-  
-tags:
-  - name: documents
-    description: Operations with documents.
-  - name: line-items
-    description: Operations with line items.
-  - name: tags
-    description: Operations with tags.
-    
-security:
-  - ClientId: []
-  - Authorization: []
-  
+  - url: https://api.veryfi.com/api/v8/partner
 paths:
-  /documents:
-    get:
-      tags:
-        - documents
-      summary: Get Documents or Search Documents.
-      operationId: getDocuments
-      description: |
-        Return list of previously processed documents or retrieve all the documents matching specified filters.
-        
-      parameters:
-        - $ref: '#/components/parameters/Query'
-        - $ref: '#/components/parameters/Tag'
-        - $ref: '#/components/parameters/ExternalId'
-        - $ref: '#/components/parameters/CreatedGte'
-        - $ref: '#/components/parameters/CreatedGt'
-        - $ref: '#/components/parameters/CreatedLte'
-        - $ref: '#/components/parameters/CreatedLt'
-        
-      responses:
-        '200':
-          $ref: '#/components/responses/Documents'
-                  
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-    post:
-      tags:
-        - documents
-      summary: Process a Document.
-      operationId: processDocument
-      description: |
-        Process a document and extract all the fields from it.
-        
-      requestBody:
-        $ref: '#/components/requestBodies/DocumentUploadOptions'
-        
-      responses:
-        '201':
-          $ref: '#/components/responses/Document'
-                  
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-          
-  /documents/{document_id}:
-    get:
-      tags:
-        - documents
-      summary: Get a Document.
-      operationId: getDocument
-      description: |
-        Retrieve a existing document by ID.
-        
-      parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        - $ref: '#/components/parameters/ReturnAuditTrail'
-        
-      responses:
-        '200':
-          $ref: '#/components/responses/Document'
-                  
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-    put:
-      tags:
-        - documents
-      summary: Update a Document.
-      operationId: updateDocument
-      description: |
-        Update data for a previously processed document, including almost any field like `vendor`, `date`, `notes` and etc.
-        
-      parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
-      requestBody:
-        $ref: '#/components/requestBodies/Document'
-        
-      responses:
-        '200':
-          $ref: '#/components/responses/Document'
-                  
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-    delete:
-      tags:
-        - documents
-      summary: Delete a Document.
-      operationId: deleteDocument
-      description: |
-        Delete an existing document by ID.
-        
-      parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
-      responses:
-        default:
-          $ref: '#/components/responses/OperationStatus'
-         
   /documents/{document_id}/line-items:
     get:
       tags:
         - line-items
       summary: Get Line Items.
+      description: Retrieve all line items for a document.
       operationId: getLineItems
-      description: |
-        Retrieve all line items for a specific document.
-        
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
+        - name: document_id
+          in: path
+          description: ID of the document.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
-          $ref: '#/components/responses/LineItems'
-          
+          description: List of line items.
+          content:
+            application/json:
+              schema: {}
         default:
           $ref: '#/components/responses/OperationStatus'
-          
+      deprecated: false
     post:
       tags:
         - line-items
       summary: Add a Line Item.
-      operationId: addLineItem
       description: |
         Add a new line item on an existing document.
-        
+      operationId: addLineItem
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
+        - name: document_id
+          in: path
+          description: ID of the document.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
       requestBody:
         $ref: '#/components/requestBodies/LineItem'
-        
       responses:
         '200':
-          $ref: '#/components/responses/LineItem'
-          
+          description: LineItem.
+          content:
+            application/json:
+              schema: {}
         default:
           $ref: '#/components/responses/OperationStatus'
-          
+      deprecated: false
     delete:
       tags:
         - line-items
       summary: Delete All Line Items.
-      operationId: deleteAllLineItems
       description: |
         Delete all line items on an existing document.
-        
+      operationId: deleteAllLineItems
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
+        - name: document_id
+          in: path
+          description: ID of the document.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
       responses:
         default:
           $ref: '#/components/responses/OperationStatus'
-          
+      deprecated: false
   /documents/{document_id}/line-items/{line_item_id}:
     get:
       tags:
         - line-items
       summary: Get a Line Item.
-      operationId: getLineItem
       description: |
         Retrieve a line item for existing document by ID.
-        
+      operationId: getLineItem
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        - $ref: '#/components/parameters/LineItemId'
-        
+        - name: document_id
+          in: path
+          description: ID of the document.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
+        - name: line_item_id
+          in: path
+          description: ID of the line item.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
-          $ref: '#/components/responses/LineItem'
-          
+          description: LineItem.
+          content:
+            application/json:
+              schema: {}
         default:
           $ref: '#/components/responses/OperationStatus'
-       
+      deprecated: false
     put:
       tags:
         - line-items
       summary: Update a Line Item.
+      description: Update an existing line item on an existing document. Since Veryfi's Machine Learning models undergo frequent training, changes that are made to processed documents are used during these training sessions and eventually help improve the accuracy of data extraction.
       operationId: updateLineItem
-      description: |
-        Update an existing line item on an existing document.
-        
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        - $ref: '#/components/parameters/LineItemId'
-        
+        - name: document_id
+          in: path
+          description: ID of the document.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
+        - name: line_item_id
+          in: path
+          description: ID of the line item.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
       requestBody:
         $ref: '#/components/requestBodies/LineItem'
-        
       responses:
         '200':
-          $ref: '#/components/responses/LineItem'
-          
+          description: LineItem.
+          content:
+            application/json:
+              schema: {}
         default:
           $ref: '#/components/responses/OperationStatus'
-       
+      deprecated: false
     delete:
       tags:
         - line-items
       summary: Delete a Line Item.
-      operationId: deleteLineItem
       description: |
         Delete an existing line item on an existing document.
-        
+      operationId: deleteLineItem
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        - $ref: '#/components/parameters/LineItemId'
-        
+        - name: document_id
+          in: path
+          description: ID of the document.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
+        - name: line_item_id
+          in: path
+          description: ID of the line item.
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          style: simple
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            format: int64
       responses:
         default:
           $ref: '#/components/responses/OperationStatus'
-          
-  /tags:
+      deprecated: false
+  /schema:
     get:
       tags:
-        - tags
-      summary: Get Tags.
-      operationId: getTags
-      description: |
-        Retrieve all existing tags.
-        
+        - documents
+      summary: Get OpenAPI schema
+      operationId: getSchema
       responses:
         '200':
-          $ref: '#/components/responses/Tags'
-                  
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-  /tags/{tag_id}:
-    delete:
-      tags:
-        - tags
-      summary: Delete a Tag.
-      operationId: deleteTag
-      description: |
-        Delete a tag globally. The tag will be removed from all documents.
-        
-      parameters:
-        - $ref: '#/components/parameters/TagId'
-        
-      responses:
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-  /documents/{document_id}/tags:
+          description: An OpenAPI schema
+      deprecated: false
+  /documents:
     get:
       tags:
-        - tags
-      summary: Get Document Tags.
-      operationId: getDocumentTags
-      description: |
-        Retrieve all tags for a specific document.
-        
+        - documents
+      summary: Search Documents
+      description: Retrieve previously processed documents.
       parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
+        - name: q
+          in: query
+          description: 'Query term to search for.  These fields will be searched: external_id category, vendor.name, notes, invoice_number, total and ocr_text.'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+          example: Wallmart
+        - name: page
+          in: query
+          description: A page number starting from 1. Enables pagination
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - name: page_size
+          in: query
+          description: Documents per page
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: integer
+            default: 100
+          example: 10
+        - name: return_audit_trail
+          in: query
+          description: Adds audit_trail_logs to response
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: boolean
+            default: false
+        - name: order_by
+          in: query
+          description: 'How to order the results, e.g. -created orders by created date, latest first '
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            enum:
+              - created
+              - '-created'
+            default: '-created'
+        - name: external_id
+          in: query
+          description: Use this if you would like to assign your own ID to documents
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            default: ''
+          example: '123456789'
+        - name: status
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            enum:
+              - in_progress
+              - processed
+              - reviewed
+              - reimbursed
+              - archived
+          example: in_progress
+        - name: tag
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+          example: food
+        - name: owner
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+          example: Gary
+        - name: created__gt
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: created__lt
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: created__gte
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: created__lte
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: updated__gt
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: updated__lt
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: updated__gte
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: updated__lte
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: date__gt
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: date__lt
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: date__gte
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
+        - name: date__lte
+          in: query
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: string
+            format: date-time
+          example: '2022-05-06'
       responses:
         '200':
-          $ref: '#/components/responses/Tags'
-          
+          description: List of previously processed documents
+          content:
+            application/json:
+              schema: {}
         default:
-          $ref: '#/components/responses/OperationStatus'
-          
+          description: OperationStatus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationStatus'
+      deprecated: false
+    post:
+      tags:
+        - documents
+      summary: Process a Document.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentPOSTJSONRequest'
+        required: false
+      responses:
+        '201':
+          description: Processed document response. Fields with an asterisk will be returned, others need to be enabled for your client
+          content:
+            application/json:
+              schema: {}
+        default:
+          description: OperationStatus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationStatus'
+      deprecated: false
+  /documents/{document_id}:
+    get:
+      tags:
+        - documents
+      summary: Get a Document
+      parameters:
+        - name: return_audit_trail
+          in: query
+          description: Adds audit_trail_logs to response
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: boolean
+            default: false
+        - name: detailed
+          in: query
+          description: Return detailed information for each field - scores, regions, etc.
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          explode: false
+          allowReserved: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Processed document response. Fields with an asterisk will be returned, others need to be enabled for your client
+          content:
+            application/json:
+              schema: {}
+        default:
+          description: OperationStatus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationStatus'
+      deprecated: false
     put:
       tags:
-        - tags
-      summary: Add a Document Tag.
-      operationId: addDocumentTag
-      description: |
-        Add a new tag on an existing document.
-        
-      parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
+        - documents
+      summary: Update a document
+      description: Update a previously processed document. Since Veryfi's Machine Learning models frequent training, changes that are made to processed documents are used during these training sessions eventually help improve the accuracy of data extraction.
       requestBody:
-        $ref: '#/components/requestBodies/Tag'
-        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentPUTRequest'
+        required: false
       responses:
         '200':
-          $ref: '#/components/responses/Tag'
-          
+          description: Processed document response. Fields with an asterisk will be returned, others need to be enabled for your client
+          content:
+            application/json:
+              schema: {}
         default:
-          $ref: '#/components/responses/OperationStatus'
-          
+          description: OperationStatus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationStatus'
+      deprecated: false
     delete:
       tags:
-        - tags
-      summary: Delete All Document Tags.
-      operationId: deleteAllDocumentTags
-      description: |
-        Delete all tags from an existing document.
-        
-      parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        
+        - documents
+      summary: Delete a Document.
       responses:
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
-  /documents/{document_id}/tags/{tag_id}:
-    delete:
-      tags:
-        - tags
-      summary: Delete a Document Tag.
-      operationId: deleteDocumentTag
-      description: |
-        Delete a tag from an existing document.
-        
-      parameters:
-        - $ref: '#/components/parameters/DocumentId'
-        - $ref: '#/components/parameters/TagId'
-        
-      responses:
-        default:
-          $ref: '#/components/responses/OperationStatus'
-          
+        '200':
+          description: OperationStatus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationStatus'
+      deprecated: false
+    parameters:
+      - name: document_id
+        in: path
+        description: ID of the document
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        style: simple
+        explode: false
+        allowReserved: false
+        schema:
+          type: integer
+          format: int64
 components:
   schemas:
-    Tag:
+    LineItems:
+      properties:
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          example:
+            - date: '2021-11-25 16:20:12'
+              description: 98 Meat Pty Xchz
+              discount: 0
+              discount_rate: 0
+              id: 75788890
+              order: 1
+              price: 12.5
+              quantity: 1
+              reference: ''
+              section: ''
+              sku: '038902058959'
+              tax: 7.66
+              tax_rate: 7.66
+              text: GINGER CARROT SOUP
+              total: 88.2
+              type: food
+              unit_of_measure: ''
       type: object
       required:
-      - id
+        - line_items
+    LineItemPUTParameters:
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 75788890
-        name:
+        category:
           type: string
-          example: 'tag'
-          
-    TaxLine:
-      type: object
-      properties:
-        name:
+          title: Category
+        country_of_origin:
           type: string
-          example: 'SALES'
-        order:
-          type: integer
-          example: 0
-        base:
-          type: number
-          format: double
-          example: 1.11
-        rate:
-          type: number
-          format: double
-          example: 1.11
-        total:
-          type: number
-          format: double
-          example: 2.22
-          
-    LineItem:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 75788890
+          enum:
+            - BD
+            - CU
+            - MD
+            - LT
+            - BN
+            - GD
+            - SI
+            - TN
+            - TZ
+            - VA
+            - BO
+            - YE
+            - MT
+            - HM
+            - SY
+            - KG
+            - KZ
+            - LI
+            - PK
+            - PE
+            - RS
+            - BV
+            - SZ
+            - TR
+            - NE
+            - GP
+            - BL
+            - TK
+            - SN
+            - IT
+            - MR
+            - WS
+            - ST
+            - UM
+            - TH
+            - NZ
+            - BH
+            - HN
+            - TG
+            - RW
+            - KE
+            - BT
+            - LV
+            - PF
+            - BW
+            - PM
+            - NF
+            - SH
+            - JE
+            - YT
+            - VG
+            - SC
+            - GY
+            - AL
+            - LB
+            - MQ
+            - GN
+            - AN
+            - QA
+            - EE
+            - JP
+            - MS
+            - SJ
+            - PN
+            - SE
+            - TF
+            - KN
+            - MY
+            - KH
+            - BM
+            - EC
+            - PR
+            - IM
+            - SR
+            - MW
+            - BS
+            - LC
+            - AQ
+            - JO
+            - GA
+            - BG
+            - CY
+            - ME
+            - DM
+            - SV
+            - NC
+            - IO
+            - ER
+            - GG
+            - FR
+            - CD
+            - RO
+            - GF
+            - MP
+            - CN
+            - ES
+            - ZM
+            - GH
+            - MO
+            - TO
+            - MM
+            - CA
+            - UZ
+            - AF
+            - KY
+            - HU
+            - MZ
+            - AG
+            - MH
+            - BF
+            - NP
+            - CV
+            - CF
+            - DE
+            - IR
+            - LR
+            - US
+            - CM
+            - NR
+            - FO
+            - DZ
+            - AR
+            - SG
+            - LS
+            - CH
+            - LK
+            - VI
+            - FJ
+            - CX
+            - CG
+            - KM
+            - ZA
+            - DO
+            - HK
+            - IS
+            - AT
+            - ZW
+            - KP
+            - AE
+            - EH
+            - IN
+            - SL
+            - MU
+            - HR
+            - GB
+            - NG
+            - SO
+            - ET
+            - PH
+            - OM
+            - PY
+            - PG
+            - AW
+            - LY
+            - TD
+            - MA
+            - FM
+            - NI
+            - PL
+            - SM
+            - TJ
+            - NA
+            - BA
+            - CO
+            - GR
+            - AM
+            - GW
+            - GS
+            - IE
+            - AI
+            - GL
+            - MG
+            - RE
+            - WF
+            - CI
+            - TL
+            - UA
+            - HT
+            - RU
+            - LU
+            - BI
+            - AS
+            - GU
+            - SD
+            - UY
+            - BB
+            - CR
+            - ID
+            - KW
+            - SA
+            - DK
+            - JM
+            - SB
+            - VC
+            - GM
+            - MX
+            - MN
+            - FI
+            - CL
+            - EG
+            - CK
+            - AX
+            - ML
+            - MC
+            - MF
+            - GT
+            - KR
+            - PT
+            - BE
+            - BZ
+            - VE
+            - UG
+            - BY
+            - NU
+            - IL
+            - TC
+            - SK
+            - CZ
+            - TW
+            - BR
+            - GQ
+            - PS
+            - MK
+            - BJ
+            - GE
+            - KI
+            - FK
+            - VU
+            - TM
+            - 'NO'
+            - TV
+            - PA
+            - DJ
+            - VN
+            - MV
+            - CC
+            - PW
+            - LA
+            - AO
+            - IQ
+            - AZ
+            - NL
+            - AU
+            - AD
+            - TT
+            - GI
+          title: Country Of Origin
+          example: BD
         date:
           type: string
-          example: ''
+          format: date
+          title: Date
+          example: '2022-05-06'
         description:
           type: string
-          example: '98 Meat Pty Xchz'
+          title: Description
+          example: 98 Meat Pty Xchz
+        discount_rate:
+          type: number
+          title: Discount Rate
         discount:
           type: number
-          format: double
-          example: 0.0
+          title: Discount
         end_date:
           type: string
-          example: ''
+          format: date
+          title: End Date
+          example: '2022-05-06'
         hsn:
           type: string
-          example: ''
+          title: Hsn
+          example: '720211'
         order:
           type: integer
+          title: Order
           example: 1
+        lot:
+          type: string
+          title: Lot
+          description: batch/lot number
+          example: '-42-8440'
         price:
           type: number
-          format: double
-          example: 12.50
+          title: Price
+          example: 12.5
         quantity:
           type: number
-          format: double
-          example: 1.0
+          title: Quantity
+          example: 1
         reference:
           type: string
-          example: ''
+          title: Reference
         section:
           type: string
-          example: ''
+          title: Section
         sku:
           type: string
+          title: Sku
+          description: Stock Keeping Unit (SKU)
           example: '038902058959'
         start_date:
           type: string
-          example: ''
-        tags:
-          type: array
-          items:
-           $ref: '#/components/schemas/Tag'
-        tax:
-          type: number
-          format: double
-          example: 7.66
+          format: date
+          title: Start Date
+          example: '2022-05-06'
+        tax_code:
+          type: string
+          title: Tax Code
+          description: '**New**, added 2023-03-23'
+        manufacturer:
+          type: string
+          title: Manufacturer
+          description: '**New**, added 2023-03-23'
         tax_rate:
           type: number
-          format: double
-          example: 7.66
+          title: Tax Rate
+        tax:
+          type: number
+          title: Tax
         total:
           type: number
-          format: double
-          example: 88.2
+          title: Total
         type:
           type: string
-          example: 'food'
+          enum:
+            - room
+            - tax
+            - parking
+            - service
+            - fee
+            - delivery
+            - product
+            - food
+            - alcohol
+            - tobacco
+            - transportation
+            - fuel
+            - discount
+            - payment
+          title: Type
+          description: A line type predicted from Veryfi list, e.g. food
+          example: room
         unit_of_measure:
           type: string
-          example: ''
-          
-    Document:
+          title: Unit Of Measure
+          example: kg
+        upc:
+          type: string
+          title: Upc
+        weight:
+          type: string
+          title: Weight
+      additionalProperties: false
       type: object
       required:
-      - id
+        - order
+      title: LineItemPUTParameters
+    CustomFields:
+      properties: {}
+      type: object
+      title: CustomFields
+    LineItem:
       properties:
         id:
           type: integer
-          format: int64
-          example: 38947300
-        abn_number:
+          title: Id
+        order:
+          type: integer
+          title: Order
+          example: 1
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        text:
           type: string
-          example: ''
-        account_number:
+          title: Text
+          description: Complete text of line item, including prices, dates, etc.
+          example: GINGER CARROT SOUP/n10$/2022-01-01
+        type:
           type: string
-          example: ''
-        bill_to_address:
-          type: string
-          example: '2 Court Square\nNew York, NY 12210'
-        bill_to_name:
-          type: string
-          example: 'John Smith'
-        bill_to_vat_number:
-          type: string
-          example: ''
-        card_number:
-          type: string
-          example: '7373'
-        cashback:
-          type: number
-          format: double
-          example: 7.66
-        category:
-          type: string
-          example: 'Meals & Entertainment'
-        created:
-          type: string
-          example: '2021-08-05 17:24:48'
-        currency_code:
-          type: string
-          example: 'USD'
+          enum:
+            - room
+            - tax
+            - parking
+            - service
+            - fee
+            - delivery
+            - product
+            - food
+            - alcohol
+            - tobacco
+            - transportation
+            - fuel
+            - discount
+            - payment
+          title: Type
+          description: A line type predicted from Veryfi list, e.g. food
+          example: room
         date:
           type: string
-          example: '2021-08-05 10:24:48'
-        delivery_date:
+          format: date
+          title: Date
+          example: '2022-05-06'
+        description:
           type: string
-          example: ''
+          title: Description
+          description: Item text excluding date, price
+          example: GNGR CRT SOUP
+        normalized_description:
+          type: string
+          title: Normalized Description
+          description: Description with expanded words
+          example: GINGER CARROT SOUP
+        discount_rate:
+          type: number
+          title: Discount Rate
         discount:
           type: number
-          format: double
-          example: 7.66
-        document_reference_number:
-          type: string
-          example: ''
-        document_title:
-          type: string
-          example: 'INVOICE'
-        document_type:
-          type: string
-          example: 'invoice'
-        due_date:
-          type: string
-          example: '2019-02-26'
-        duplicate_of:
-          type: integer
-          format: int64
-          nullable: true
-          example: 38995348
-        external_id:
-          type: string
-          example: ''
-        img_file_name:
-          type: string
-          example: '8247b18a-41f0-443c-bbf4-10814385e097.pdf'
-        img_thumbnail_url:
-          type: string
-          example: 'https://scdn.veryfi.com/receipts/470e7ab9-3084-4d05-b840-885383a2c22e/thumbnail.jpg?Expires=1628185188&Signature=cnyZCF~GnF2TkizYWObnGuNDhmkCsRl5-XoVymoalJFjJCrQKmq7RbpS6RCUnt60aVlPiT1uJeQJXG4eyZOg~FfJc5-ieC0gkqAFhh9vCRjzph15niTfq0mKg23nOu3YR8BJcWBfPfEL8k3FEqFERsvUBNddvfCkfx9JoMlq9ATNBQLxkK4lJPF4vMcFpkiCStOEt0MDJM80NbgPAqZEAQuDzygaiy8owaGiOVIj0h0ZMzLHNPzf5flGYqK6D2LvGRZlEIESavULk1Eug7tuG1DiqxTaDDxDbBGUCDb9ZIaKQAsPXzoEHUExB3J61q-B5KTFJSNch1okMe6sT9fzpQ__&Key-Pair-Id=APKAJCILBXEJFZF4DCHQ'
-        img_url:
-          type: string
-          example: 'https://scdn.veryfi.com/receipts/470e7ab9-3084-4d05-b840-885383a2c22e/8247b18a-41f0-443c-bbf4-10814385e097.pdf?Expires=1628185188&Signature=OAaTOHH3KQYlj9pPA0fO50VjQSC8hnJJVvyJZwiGbK-wLw76UF5tWm0XtD5Htp2xx0vXbqJINIT7joyLA1dik01qDprgUbuXfcGamPUgJ6xcLOBKBF855bpFepK0Jdr-x9aGnx4EER7Z~CxUgvrv99cuFGuMab2s9gr0DwXHgLTCzVMZ2dOhbbvR8Yw8ADddzoOSPkwc~3PBB6AGla8cTQmSO0EWlq87rPaXWRrOnqnHwv5RqLWzVpODWVLeBYYudE2ZlaO~U7ftHzc0llKl3kffn4hElaDd5a7VoN0V9yKrGa1cCgRyYmFy9qtGsn3XPZutgnnzkB-~p6y0CUr7Zg__&Key-Pair-Id=APKAJCILBXEJFZF4DCHQ'
-        insurance:
-          type: string
-          example: ''
-        invoice_number:
-          type: string
-          example: '98'
-        is_duplicate:
-          type: integer
+          title: Discount
+        price:
+          type: number
+          title: Price
+          example: 12.5
+        quantity:
+          type: number
+          title: Quantity
           example: 1
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        notes:
+        reference:
           type: string
-          example: ''
-        ocr_text:
+          title: Reference
+        section:
           type: string
-          example: '2004-10-31\n\t8:21 PM\nYOUR GUEST NUMBER IS\n98\nIN-N-OUT BURGER LAS VEGAS EASTERN\n2004-10-31\t\t8:21 PM\n165 1 5 98\nCashier: SAM\nGUEST #: 98\nCounter-Eat in\n\t2.65\nDbDb\t\t88.20\n98 Meat Pty Xchz\n\t90.85\nCounter-Eat In\t\t6.81\nTAX 7.50%\t\t97.66\nAmount Due\n\t$97.66\nCASH TENDER\t\t$.00\nChange\n2004-10-31\t\t8:21 PM\nTHANK YOU!'
-        order_date:
+          title: Section
+        sku:
           type: string
-          example: ''
-        payment_display_name:
-          type: string
-          example: 'Cash'
-        payment_terms:
-          type: string
-          example: '15 days'
-        payment_type:
-          type: string
-          example: 'cash'
-        phone_number:
-          type: string
-          example: '165 1 5 98'
-        purchase_order_number:
-          type: string
-          example: '2312/2019'
-        rounding:
+          title: Sku
+          description: Stock Keeping Unit (SKU)
+          example: '038902058959'
+        tax_rate:
           type: number
-          format: double
-          example: 0.0
-        service_end_date:
-          type: string
-          example: ''
-        service_start_date:
-          type: string
-          example: ''
-        ship_date:
-          type: string
-          example: ''
-        ship_to_address:
-          type: string
-          example: '3787 Pineview Drive\nCambridge, MA 12210'
-        ship_to_name:
-          type: string
-          example: 'John Smith'
-        shipping:
-          type: number
-          format: double
-          example: 0.0
-        store_number:
-          type: string
-          example: ''
-        subtotal:
-          type: number
-          format: double
-          example: 97.66
+          title: Tax Rate
         tax:
           type: number
-          format: double
-          example: 12.5
-        tax_lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxLine'
-        tip:
-          type: number
-          format: double
-          example: 12.5
+          title: Tax
         total:
           type: number
-          format: double
-          example: 97.66
-        total_weight:
+          title: Total
+        unit_of_measure:
           type: string
-          example: ''
-        tracking_number:
+          title: Unit Of Measure
+          example: kg
+        category:
           type: string
-          example: ''
-        updated:
+          title: Category
+          description: Category taken from reviewed line item with same sku and/or description. Otherwise from document category
+        country_of_origin:
           type: string
-          example: '2021-08-05 17:24:48'
-        vat_number:
+          enum:
+            - BD
+            - CU
+            - MD
+            - LT
+            - BN
+            - GD
+            - SI
+            - TN
+            - TZ
+            - VA
+            - BO
+            - YE
+            - MT
+            - HM
+            - SY
+            - KG
+            - KZ
+            - LI
+            - PK
+            - PE
+            - RS
+            - BV
+            - SZ
+            - TR
+            - NE
+            - GP
+            - BL
+            - TK
+            - SN
+            - IT
+            - MR
+            - WS
+            - ST
+            - UM
+            - TH
+            - NZ
+            - BH
+            - HN
+            - TG
+            - RW
+            - KE
+            - BT
+            - LV
+            - PF
+            - BW
+            - PM
+            - NF
+            - SH
+            - JE
+            - YT
+            - VG
+            - SC
+            - GY
+            - AL
+            - LB
+            - MQ
+            - GN
+            - AN
+            - QA
+            - EE
+            - JP
+            - MS
+            - SJ
+            - PN
+            - SE
+            - TF
+            - KN
+            - MY
+            - KH
+            - BM
+            - EC
+            - PR
+            - IM
+            - SR
+            - MW
+            - BS
+            - LC
+            - AQ
+            - JO
+            - GA
+            - BG
+            - CY
+            - ME
+            - DM
+            - SV
+            - NC
+            - IO
+            - ER
+            - GG
+            - FR
+            - CD
+            - RO
+            - GF
+            - MP
+            - CN
+            - ES
+            - ZM
+            - GH
+            - MO
+            - TO
+            - MM
+            - CA
+            - UZ
+            - AF
+            - KY
+            - HU
+            - MZ
+            - AG
+            - MH
+            - BF
+            - NP
+            - CV
+            - CF
+            - DE
+            - IR
+            - LR
+            - US
+            - CM
+            - NR
+            - FO
+            - DZ
+            - AR
+            - SG
+            - LS
+            - CH
+            - LK
+            - VI
+            - FJ
+            - CX
+            - CG
+            - KM
+            - ZA
+            - DO
+            - HK
+            - IS
+            - AT
+            - ZW
+            - KP
+            - AE
+            - EH
+            - IN
+            - SL
+            - MU
+            - HR
+            - GB
+            - NG
+            - SO
+            - ET
+            - PH
+            - OM
+            - PY
+            - PG
+            - AW
+            - LY
+            - TD
+            - MA
+            - FM
+            - NI
+            - PL
+            - SM
+            - TJ
+            - NA
+            - BA
+            - CO
+            - GR
+            - AM
+            - GW
+            - GS
+            - IE
+            - AI
+            - GL
+            - MG
+            - RE
+            - WF
+            - CI
+            - TL
+            - UA
+            - HT
+            - RU
+            - LU
+            - BI
+            - AS
+            - GU
+            - SD
+            - UY
+            - BB
+            - CR
+            - ID
+            - KW
+            - SA
+            - DK
+            - JM
+            - SB
+            - VC
+            - GM
+            - MX
+            - MN
+            - FI
+            - CL
+            - EG
+            - CK
+            - AX
+            - ML
+            - MC
+            - MF
+            - GT
+            - KR
+            - PT
+            - BE
+            - BZ
+            - VE
+            - UG
+            - BY
+            - NU
+            - IL
+            - TC
+            - SK
+            - CZ
+            - TW
+            - BR
+            - GQ
+            - PS
+            - MK
+            - BJ
+            - GE
+            - KI
+            - FK
+            - VU
+            - TM
+            - 'NO'
+            - TV
+            - PA
+            - DJ
+            - VN
+            - MV
+            - CC
+            - PW
+            - LA
+            - AO
+            - IQ
+            - AZ
+            - NL
+            - AU
+            - AD
+            - TT
+            - GI
+          title: Country Of Origin
+          example: BD
+        custom_fields:
+          allOf:
+            - $ref: '#/components/schemas/CustomFields'
+          title: Custom Fields
+          description: Custom fields extracted with rules
+          default: {}
+        end_date:
           type: string
-          example: ''
-        vendor:
-          type: object
-          properties:
-            address:
-              type: string
-              example: '1912 Harvest Lane\nNew York, NY 12210'
-            category:
-              type: string
-              example: 'Fast Food'
-            email:
-              type: string
-              example: ''
-            fax_number:
-              type: string
-              example: ''
-            name:
-              type: string
-              example: 'In-n-out Burger'
-            phone_number:
-              type: string
-              example: '165 1 5 98'
-            raw_name:
-              type: string
-              example: 'In-N-Out Burger'
-            vendor_logo:
-              type: string
-              example: 'https://cdn.veryfi.com/logos/us/949103001.png'
-            vendor_reg_number:
-              type: string
-              example: ''
-            vendor_type:
-              type: string
-              example: 'Fast Food'
-            web:
-              type: string
-              example: ''
-        vendor_account_number:
+          format: date
+          title: End Date
+          example: '2022-05-06'
+        hsn:
           type: string
-          example: ''
-        vendor_bank_name:
+          title: Hsn
+          example: '720211'
+        lot:
           type: string
-          example: ''
-        vendor_bank_number:
+          title: Lot
+          description: batch/lot number
+          example: '-42-8440'
+        start_date:
           type: string
-          example: ''
-        vendor_bank_swift:
+          format: date
+          title: Start Date
+          example: '2022-05-06'
+        tax_code:
           type: string
-          example: ''
-        vendor_iban:
+          title: Tax Code
+          description: '**New**, added 2023-03-23'
+        manufacturer:
           type: string
-          example: ''
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/OperationStatus'
-      
-    DocumentUploadOptions:
+          title: Manufacturer
+          description: '**New**, added 2023-03-23'
+        upc:
+          type: string
+          title: Upc
+        weight:
+          type: string
+          title: Weight
+      additionalProperties: false
       type: object
+      required:
+        - weight
+        - section
+        - start_date
+        - end_date
+        - sku
+        - hsn
+      title: LineItem
+    DetailedField:
       properties:
-        file_name:
-          type: string
-          description: ''
-          example: 'invoice.png'
-        file:
-          type: string
-          description: ''
-          format: binary
-        file_data:
-          type: string
-          description: ''
-          example: 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII='
-        file_url:
-          type: string
-          description: 'Publicly accessible URL to a file, e.g. "https://cdn.example.com/receipt.jpg".'
-          example: 'https://raw.githubusercontent.com/veryfi/veryfi-python/master/tests/assets/receipt_public.jpg'
-        file_urls:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
           type: array
-          description: 'List of publicly accessible URLs to multiple files, e.g. ["https://cdn.example.com/receipt1.jpg", "https://cdn.example.com/receipt2.jpg"].'
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
+          type: integer
+          title: Rotation
+        value:
+          type: string
+          title: Value
+      additionalProperties: false
+      type: object
+      title: DetailedField
+    ParsedAddress:
+      properties:
+        city:
+          type: string
+          title: City
+          description: Settlement including cities, towns, villages, hamlets, localities, etc.
+          example: Round Rock
+        country:
+          type: string
+          title: Country
+          description: Sovereign nations and their dependent territories, anything with an ISO-3166 code.
+          example: United States
+        postcode:
+          type: string
+          title: Postcode
+          description: Postal codes used for mail sorting
+          example: '78681'
+        state:
+          type: string
+          title: State
+          description: A first-level administrative division. Scotland, Northern Ireland, Wales, and England in the UK are mapped to "state" as well
+          example: TX
+        street_address:
+          type: string
+          title: Street Address
+          description: A sum of house_number road, bulding, unit
+          example: 2500, Hoppe Trl At Wolle Ln
+        house:
+          type: string
+          title: House
+          description: Venue name e.g. "Brooklyn Academy of Music", and building names e.g. "Empire State Building"
+        house_number:
+          type: string
+          title: House Number
+          description: Usually refers to the external (street-facing) building number. In some countries this may be a compount, hyphenated number which also includes an apartment number, or a block number (a la Japan)
+        road:
+          type: string
+          title: Road
+          description: Street name(s)
+        unit:
+          type: string
+          title: Unit
+          description: An apartment, unit, office, lot, or other secondary unit designator
+        level:
+          type: string
+          title: Level
+          description: Expressions indicating a floor number e.g. "3rd Floor", "Ground Floor", etc.
+        staircase:
+          type: string
+          title: Staircase
+          description: Numbered/lettered staircase
+        entrance:
+          type: string
+          title: Entrance
+          description: Numbered/lettered entrance
+        po_box:
+          type: string
+          title: Po Box
+          description: Post office box, typically found in non-physical (mail-only) addresses
+        suburb:
+          type: string
+          title: Suburb
+          description: An unofficial neighborhood name like "Harlem", "South Bronx", or "Crown Heights"
+        city_district:
+          type: string
+          title: City District
+          description: Boroughs or districts within a city that serve some official purpose e.g. "Brooklyn" or "Hackney" or "Bratislava IV"
+        island:
+          type: string
+          title: Island
+          description: Named islands e.g. "Maui"
+        state_district:
+          type: string
+          title: State District
+          description: Usually a second-level administrative division or county.
+        country_region:
+          type: string
+          title: Country Region
+          description: Informal subdivision of a country without any political status
+        world_region:
+          type: string
+          title: World Region
+          description: Only used for appending "West Indies" after the country name, a pattern frequently used in the English-speaking Caribbean e.g. "Jamaica, West Indies"
+      additionalProperties: false
+      type: object
+      title: ParsedAddress
+    DetailedBillTo:
+      properties:
+        name:
+          $ref: '#/components/schemas/DetailedField'
+        address:
+          $ref: '#/components/schemas/DetailedField'
+        vat_number:
+          $ref: '#/components/schemas/DetailedField'
+        phone_number:
+          $ref: '#/components/schemas/DetailedField'
+        reg_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Reg Number
+          description: Payer Registration Number
+        email:
+          $ref: '#/components/schemas/DetailedField'
+        parsed_address:
+          $ref: '#/components/schemas/ParsedAddress'
+      additionalProperties: false
+      type: object
+      title: DetailedBillTo
+    DetailedDatetimeField:
+      properties:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
+          type: array
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
+          type: integer
+          title: Rotation
+        value:
+          type: string
+          format: date-time
+          title: Value
+      additionalProperties: false
+      type: object
+      title: DetailedDatetimeField
+    DetailedDefaultCategory:
+      properties:
+        value:
+          type: string
+          enum:
+            - other
+            - Meals & Entertainment
+            - Job Supplies
+            - Travel
+            - Automotive
+            - Food and Groceries
+            - Office Supplies & Software
+            - Transportation
+            - Repairs & Maintenance
+            - Utilities
+            - Gifts & Donations
+            - Advertising & Marketing
+            - Legal & Professional Services
+            - Healthcare
+            - Contractors
+            - Rent & Lease
+            - Postage & Delivery
+            - Insurance
+            - Household
+            - Clothing & Shoes
+            - Taxes & Licenses
+            - Payroll Expenses
+            - Bank Charges & Fees
+            - Dues and Subscriptions
+            - Training & Education
+            - Interest Paid
+          title: Value
+      additionalProperties: false
+      type: object
+      title: DetailedDefaultCategory
+    DetailedFloatField:
+      properties:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
+          type: array
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
+          type: integer
+          title: Rotation
+        value:
+          type: number
+          title: Value
+      additionalProperties: false
+      type: object
+      title: DetailedFloatField
+    DetailedBoolField:
+      properties:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
+          type: array
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
+          type: integer
+          title: Rotation
+        value:
+          type: boolean
+          title: Value
+      additionalProperties: false
+      type: object
+      required:
+        - value
+      title: DetailedBoolField
+    DetailedDateField:
+      properties:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
+          type: array
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
+          type: integer
+          title: Rotation
+        value:
+          type: string
+          format: date
+          title: Value
+      additionalProperties: false
+      type: object
+      title: DetailedDateField
+    DetailedContryOfOriginField:
+      properties:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
+          type: array
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
+          type: integer
+          title: Rotation
+        value:
+          type: string
+          enum:
+            - BD
+            - CU
+            - MD
+            - LT
+            - BN
+            - GD
+            - SI
+            - TN
+            - TZ
+            - VA
+            - BO
+            - YE
+            - MT
+            - HM
+            - SY
+            - KG
+            - KZ
+            - LI
+            - PK
+            - PE
+            - RS
+            - BV
+            - SZ
+            - TR
+            - NE
+            - GP
+            - BL
+            - TK
+            - SN
+            - IT
+            - MR
+            - WS
+            - ST
+            - UM
+            - TH
+            - NZ
+            - BH
+            - HN
+            - TG
+            - RW
+            - KE
+            - BT
+            - LV
+            - PF
+            - BW
+            - PM
+            - NF
+            - SH
+            - JE
+            - YT
+            - VG
+            - SC
+            - GY
+            - AL
+            - LB
+            - MQ
+            - GN
+            - AN
+            - QA
+            - EE
+            - JP
+            - MS
+            - SJ
+            - PN
+            - SE
+            - TF
+            - KN
+            - MY
+            - KH
+            - BM
+            - EC
+            - PR
+            - IM
+            - SR
+            - MW
+            - BS
+            - LC
+            - AQ
+            - JO
+            - GA
+            - BG
+            - CY
+            - ME
+            - DM
+            - SV
+            - NC
+            - IO
+            - ER
+            - GG
+            - FR
+            - CD
+            - RO
+            - GF
+            - MP
+            - CN
+            - ES
+            - ZM
+            - GH
+            - MO
+            - TO
+            - MM
+            - CA
+            - UZ
+            - AF
+            - KY
+            - HU
+            - MZ
+            - AG
+            - MH
+            - BF
+            - NP
+            - CV
+            - CF
+            - DE
+            - IR
+            - LR
+            - US
+            - CM
+            - NR
+            - FO
+            - DZ
+            - AR
+            - SG
+            - LS
+            - CH
+            - LK
+            - VI
+            - FJ
+            - CX
+            - CG
+            - KM
+            - ZA
+            - DO
+            - HK
+            - IS
+            - AT
+            - ZW
+            - KP
+            - AE
+            - EH
+            - IN
+            - SL
+            - MU
+            - HR
+            - GB
+            - NG
+            - SO
+            - ET
+            - PH
+            - OM
+            - PY
+            - PG
+            - AW
+            - LY
+            - TD
+            - MA
+            - FM
+            - NI
+            - PL
+            - SM
+            - TJ
+            - NA
+            - BA
+            - CO
+            - GR
+            - AM
+            - GW
+            - GS
+            - IE
+            - AI
+            - GL
+            - MG
+            - RE
+            - WF
+            - CI
+            - TL
+            - UA
+            - HT
+            - RU
+            - LU
+            - BI
+            - AS
+            - GU
+            - SD
+            - UY
+            - BB
+            - CR
+            - ID
+            - KW
+            - SA
+            - DK
+            - JM
+            - SB
+            - VC
+            - GM
+            - MX
+            - MN
+            - FI
+            - CL
+            - EG
+            - CK
+            - AX
+            - ML
+            - MC
+            - MF
+            - GT
+            - KR
+            - PT
+            - BE
+            - BZ
+            - VE
+            - UG
+            - BY
+            - NU
+            - IL
+            - TC
+            - SK
+            - CZ
+            - TW
+            - BR
+            - GQ
+            - PS
+            - MK
+            - BJ
+            - GE
+            - KI
+            - FK
+            - VU
+            - TM
+            - 'NO'
+            - TV
+            - PA
+            - DJ
+            - VN
+            - MV
+            - CC
+            - PW
+            - LA
+            - AO
+            - IQ
+            - AZ
+            - NL
+            - AU
+            - AD
+            - TT
+            - GI
+          title: Value
+          example: BD
+      additionalProperties: false
+      type: object
+      title: DetailedContryOfOriginField
+    DetailedLineItem:
+      properties:
+        id:
+          type: integer
+          title: Id
+        order:
+          type: integer
+          title: Order
+          example: 1
+        tags:
           items:
             type: string
-            example: 'https://raw.githubusercontent.com/veryfi/veryfi-python/master/tests/assets/receipt_public.jpg'
-          
-        auto_delete:
-          type: integer
-          description: 'Delete this document from Veryfi after data has been extracted.'
+          type: array
+          title: Tags
+        text:
+          type: string
+          title: Text
+          description: Complete text of line item, including prices, dates, etc.
+          example: GINGER CARROT SOUP/n10$/2022-01-01
+        type:
+          type: string
+          enum:
+            - room
+            - tax
+            - parking
+            - service
+            - fee
+            - delivery
+            - product
+            - food
+            - alcohol
+            - tobacco
+            - transportation
+            - fuel
+            - discount
+            - payment
+          title: Type
+          description: A line type predicted from Veryfi list, e.g. food
+          example: room
+        date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDateField'
+          title: Date
+          example: '2022-05-06'
+        description:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Description
+          description: Item text excluding date, price
+          example: GNGR CRT SOUP
+        normalized_description:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Normalized Description
+          description: Description with expanded words
+          example: GINGER CARROT SOUP
+        discount_rate:
+          $ref: '#/components/schemas/DetailedFloatField'
+        discount:
+          $ref: '#/components/schemas/DetailedFloatField'
+        price:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Price
+          example: 12.5
+        quantity:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Quantity
           example: 1
-        boost_mode:
+        reference:
+          $ref: '#/components/schemas/DetailedField'
+        section:
+          $ref: '#/components/schemas/DetailedField'
+        sku:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Sku
+          description: Stock Keeping Unit (SKU)
+          example: '038902058959'
+        tax_rate:
+          $ref: '#/components/schemas/DetailedFloatField'
+        tax:
+          $ref: '#/components/schemas/DetailedFloatField'
+        total:
+          $ref: '#/components/schemas/DetailedFloatField'
+        unit_of_measure:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Unit Of Measure
+          example: kg
+        category:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Category
+          description: Category taken from reviewed line item with same sku and/or description. Otherwise from document category
+        country_of_origin:
+          $ref: '#/components/schemas/DetailedContryOfOriginField'
+        custom_fields:
+          allOf:
+            - $ref: '#/components/schemas/CustomFields'
+          title: Custom Fields
+          description: Custom fields extracted with rules
+          default: {}
+        end_date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDateField'
+          title: End Date
+          example: '2022-05-06'
+        hsn:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Hsn
+          example: '720211'
+        lot:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Lot
+          description: batch/lot number
+          example: '-42-8440'
+        start_date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDateField'
+          title: Start Date
+          example: '2022-05-06'
+        tax_code:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Tax Code
+          description: '**New**, added 2023-03-23'
+        manufacturer:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Manufacturer
+          description: '**New**, added 2023-03-23'
+        upc:
+          $ref: '#/components/schemas/DetailedField'
+        weight:
+          $ref: '#/components/schemas/DetailedField'
+      additionalProperties: false
+      type: object
+      required:
+        - id
+        - order
+        - text
+        - type
+        - date
+        - description
+        - discount_rate
+        - discount
+        - price
+        - quantity
+        - reference
+        - section
+        - sku
+        - tax_rate
+        - tax
+        - total
+        - unit_of_measure
+      title: DetailedLineItem
+    DetailedPayment:
+      properties:
+        card_number:
+          $ref: '#/components/schemas/DetailedField'
+        display_name:
+          type: string
+          title: Display Name
+          example: Visa
+        terms:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Terms
+          example: 15 days
+        type:
+          $ref: '#/components/schemas/DetailedField'
+      additionalProperties: false
+      type: object
+      required:
+        - card_number
+        - display_name
+        - type
+      title: DetailedPayment
+    DetailedShipTo:
+      properties:
+        address:
+          $ref: '#/components/schemas/DetailedField'
+        name:
+          $ref: '#/components/schemas/DetailedField'
+        parsed_address:
+          $ref: '#/components/schemas/ParsedAddress'
+      additionalProperties: false
+      type: object
+      title: DetailedShipTo
+    DetailedTaxLine:
+      properties:
+        order:
           type: integer
-          description: 'Flag that tells Veryfi whether boost mode should be enabled. When set to `1`, Veryfi will skip data enrichment steps, but will process the document faster. Default value for this flag is `0`.'
-          example: 1
-        confidence_details:
+          title: Order
+        name:
+          $ref: '#/components/schemas/DetailedField'
+        rate:
+          $ref: '#/components/schemas/DetailedFloatField'
+        total:
+          $ref: '#/components/schemas/DetailedFloatField'
+        base:
+          $ref: '#/components/schemas/DetailedFloatField'
+        code:
+          $ref: '#/components/schemas/DetailedField'
+      additionalProperties: false
+      type: object
+      required:
+        - order
+        - name
+        - rate
+        - total
+        - base
+        - code
+      title: DetailedTaxLine
+    DetailedBankBreakdown:
+      properties:
+        vendor_bank_name:
+          $ref: '#/components/schemas/DetailedField'
+        vendor_bank_swift:
+          $ref: '#/components/schemas/DetailedField'
+        vendor_iban:
+          $ref: '#/components/schemas/DetailedField'
+        vendor_bank_number:
+          $ref: '#/components/schemas/DetailedField'
+        vendor_bank_numbers:
+          items:
+            $ref: '#/components/schemas/DetailedField'
+          type: array
+          title: Vendor Bank Numbers
+      additionalProperties: false
+      type: object
+      required:
+        - vendor_bank_name
+        - vendor_bank_swift
+        - vendor_iban
+        - vendor_bank_number
+        - vendor_bank_numbers
+      title: DetailedBankBreakdown
+    VendorExternalIds:
+      properties:
+        id:
+          type: string
+          title: Id
+        source:
+          type: string
+          title: Source
+      additionalProperties: false
+      type: object
+      required:
+        - id
+        - source
+      title: VendorExternalIds
+    DetailedVendorType:
+      properties:
+        bounding_box:
+          items:
+            anyOf:
+              - type: number
+              - type: integer
+          type: array
+          maxItems: 5
+          minItems: 5
+          title: Bounding Box
+        bounding_region:
+          items:
+            type: number
+          type: array
+          maxItems: 8
+          minItems: 8
+          title: Bounding Region
+        ocr_score:
+          type: number
+          title: Ocr Score
+        score:
+          type: number
+          title: Score
+        rotation:
           type: integer
-          description: 'Return prediction scores along with values'
-          example: 1
-        async:
-          type: integer
-          description: '123'
-          example: 1
+          title: Rotation
+        value:
+          type: string
+          enum:
+            - other
+            - Grocery
+            - Fuel
+            - Hardware
+            - Taxi
+            - Restaurant
+            - Online Shopping
+            - Fast Food
+            - Hotel
+            - Utilities
+            - Department Store
+            - Convenience
+            - Food
+            - General Contractor
+            - Car Repair
+            - Drugstore / Pharmacy
+            - Coffee
+            - Parking
+            - Nurseries & Gardening
+            - Auto Parts
+            - Airlines
+            - Health
+            - Bakery
+            - Building Supplies
+            - Office Equipment
+            - Transportation
+            - Furniture Store
+            - Bar
+            - Electronics Store
+            - Clothing Store
+            - Shipping
+            - Online Service
+            - Insurance
+            - Toll
+            - Pizza
+            - Car Rental
+            - Brewery
+            - Bank
+            - Home Goods Store
+            - Arts & Crafts Store
+            - Car Wash
+            - Real Estate Service
+            - Shoe Store
+            - Cafe
+            - Laundry
+            - ATM
+            - Book Store
+            - Construction & Landscaping
+            - Airport
+            - Hair Care
+            - Ice Cream Shop
+            - Florist
+            - Auto
+            - Gym / Fitness Center
+            - Movie Theater
+            - Entertainment
+            - Farm
+            - Market
+            - Rent
+            - Garage
+            - Food Court
+            - Baggage
+            - Daycare
+            - Catering
+            - Airport Parking
+          title: Value
+      additionalProperties: false
+      type: object
+      required:
+        - value
+      title: DetailedVendorType
+    DetailedVendor:
+      properties:
+        abn_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Abn Number
+          description: ABN Number (Australian Business Number
+        account_currency:
+          $ref: '#/components/schemas/DetailedField'
+        account_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Account Number
+          description: Bank account number, e.g. routing number
+        address:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Address
+        bank_name:
+          $ref: '#/components/schemas/DetailedField'
+        bank_number:
+          $ref: '#/components/schemas/DetailedField'
+        bank_swift:
+          $ref: '#/components/schemas/DetailedField'
+        biller_code:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Biller Code
+          description: '**New**, added 2023-03-23'
+        email:
+          $ref: '#/components/schemas/DetailedField'
         external_id:
           type: string
-          description: 'Optional custom document identifier. Use this if you would like to assign your own ID to documents.'
+          title: External Id
+        fax_number:
+          $ref: '#/components/schemas/DetailedField'
+        full_address:
+          type: string
+          title: Full Address
+        iban:
+          $ref: '#/components/schemas/DetailedField'
+        name:
+          $ref: '#/components/schemas/DetailedField'
+        phone_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Phone Number
+        raw_name:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Raw Name
+          description: Vendor name found on the document
+        reg_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Reg Number
+          description: Vendor Registration Number
+        types:
+          type: string
+          title: Types
+        order_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Order Number
+          description: New, added 2023-03-23. Sales order number
+        vat_number:
+          $ref: '#/components/schemas/DetailedField'
+        web:
+          $ref: '#/components/schemas/DetailedField'
+        bank_breakdown:
+          items:
+            $ref: '#/components/schemas/DetailedBankBreakdown'
+          type: array
+          title: Bank Breakdown
+          example:
+            - vendor_bank_name: Commerzbank Lüchow
+              vendor_bank_swift: COBADEFFXXX
+              vendor_iban: DE53 2584 1403 0545 4350 00
+              vendor_bank_number: '12313223'
+              vendor_bank_numbers:
+                - '12313223051242'
+        category:
+          $ref: '#/components/schemas/DetailedField'
+        external_ids:
+          items:
+            $ref: '#/components/schemas/VendorExternalIds'
+          type: array
+          title: External Ids
+        lat:
+          type: number
+          title: Lat
+        lng:
+          type: number
+          title: Lng
+        logo:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Logo
+        map_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Map Url
+        parsed_address:
+          $ref: '#/components/schemas/ParsedAddress'
+        raw_address:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Raw Address
+          description: Vendor address found on the document
+        type:
+          allOf:
+            - $ref: '#/components/schemas/DetailedVendorType'
+          title: Type
+          description: Vendor type predicted from Veryfi list, e.g. Taxi
+      additionalProperties: false
+      type: object
+      required:
+        - address
+        - fax_number
+        - name
+        - phone_number
+        - logo
+        - raw_address
+        - type
+      title: DetailedVendor
+    DetailedDocument:
+      properties:
+        accounting_entry_type:
+          type: string
+          enum:
+            - debit
+            - credit
+          title: Accounting Entry Type
+          example: credit
+        created_date:
+          type: string
+          format: date-time
+          title: Created Date
+          example: '2022-05-06 14:35:02'
+        custom_fields:
+          $ref: '#/components/schemas/CustomFields'
+        duplicate_of:
+          type: integer
+          title: Duplicate Of
+          description: Duplicated Document ID
+        exch_rate:
+          type: number
+          title: Exch Rate
+        external_id:
+          type: string
+          title: External Id
+          description: Use this if you would like to assign your own ID to documents
+          default: ''
           example: '123456789'
+        id:
+          type: integer
+          title: Id
+        img_blur:
+          type: boolean
+          title: Img Blur
+        img_file_name:
+          type: string
+          title: Img File Name
+        img_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Img Url
+          description: Secure URL to either original image or pdf create from it, with expiration of 15 minutes from the response time
+        img_thumbnail_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Img Thumbnail Url
+          description: Secure URL to thumbnail, with expiration of 15 minutes from the response time
+        is_approved:
+          type: boolean
+          title: Is Approved
+        is_blurry:
+          items:
+            type: boolean
+          type: array
+          title: Is Blurry
+          description: An array showing if each processed page is blurry
+        is_document:
+          type: boolean
+          title: Is Document
+        is_duplicate:
+          type: boolean
+          title: Is Duplicate
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          title: Line Items
+        model:
+          type: string
+          title: Model
+        notes:
+          type: string
+          title: Notes
+        pdf_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Pdf Url
+          description: Secure URL to pdf created from original documents, with expiration of 15 minutes from the response time
+        ocr_text:
+          type: string
+          title: Ocr Text
+        reference_number:
+          type: string
+          title: Reference Number
+          description: An id for reference. Use id instead
+          deprecated: true
+        status:
+          type: string
+          enum:
+            - in_progress
+            - processed
+            - reviewed
+            - reimbursed
+            - archived
+          title: Status
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        total_pages:
+          type: integer
+          title: Total Pages
+          description: Total sent pages
+        updated_date:
+          type: string
+          format: date-time
+          title: Updated Date
+          example: '2022-05-06 14:35:02'
+        warnings:
+          items:
+            type: string
+          type: array
+          title: Warnings
+        account_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Account Number
+          description: Payee bank account number
+        balance:
+          $ref: '#/components/schemas/DetailedField'
+        bill_to:
+          $ref: '#/components/schemas/DetailedBillTo'
+        cashback:
+          $ref: '#/components/schemas/DetailedField'
+        category:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Category
+          description: 'A category predicted from sent categories, user categories or default ones. '
+        confidence_details:
+          type: boolean
+          title: Confidence Details
+        currency_code:
+          $ref: '#/components/schemas/DetailedField'
+        date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDatetimeField'
+          title: Date
+          example: '2022-05-06 14:35:02'
+        default_category:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDefaultCategory'
+          title: Default Category
+          description: A category predicted from Veryfi list, e.g. Job Supplies
+        delivery_date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDatetimeField'
+          title: Delivery Date
+          example: '2022-05-06 14:35:02'
+        delivery_note_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Delivery Note Number
+          description: New, added 2023-03-23.
+        discount:
+          $ref: '#/components/schemas/DetailedFloatField'
+        document_reference_number:
+          $ref: '#/components/schemas/DetailedField'
+        document_title:
+          $ref: '#/components/schemas/DetailedField'
+        due_date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDatetimeField'
+          title: Due Date
+          example: '2022-05-06 14:35:02'
+        final_balance:
+          type: number
+          title: Final Balance
+          description: '**New**, added 2023-03-23'
+        guest_count:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Guest Count
+          description: Number of guests/seats extracted, e.g. for a restaurant receipt or hotel invoice.
+          example: 1, 2, 4
+        incoterms:
+          $ref: '#/components/schemas/DetailedField'
+        insurance:
+          $ref: '#/components/schemas/DetailedFloatField'
+        invoice_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Invoice Number
+        is_money_in:
+          allOf:
+            - $ref: '#/components/schemas/DetailedBoolField'
+          title: Is Money In
+          description: true if refund or credit note
+        license_plate_number:
+          $ref: '#/components/schemas/DetailedField'
+        line_items_with_scores:
+          items:
+            $ref: '#/components/schemas/DetailedLineItem'
+          type: array
+          title: Line Items With Scores
+        order_date:
+          $ref: '#/components/schemas/DetailedDateField'
+        payment:
+          $ref: '#/components/schemas/DetailedPayment'
+        previous_balance:
+          $ref: '#/components/schemas/DetailedFloatField'
+        purchase_order_number:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Purchase Order Number
+          example: 2312/2019
+        rounding:
+          $ref: '#/components/schemas/DetailedFloatField'
+        server_name:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Server Name
+          description: Restaurant's server name
+        service_start_date:
+          $ref: '#/components/schemas/DetailedDateField'
+        service_end_date:
+          $ref: '#/components/schemas/DetailedDateField'
+        ship_date:
+          allOf:
+            - $ref: '#/components/schemas/DetailedDateField'
+          title: Ship Date
+          example: '2022-05-06'
+        ship_to:
+          $ref: '#/components/schemas/DetailedShipTo'
+        shipping:
+          $ref: '#/components/schemas/DetailedFloatField'
+        store_number:
+          $ref: '#/components/schemas/DetailedField'
+        subtotal:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Subtotal
+          example: 97.11
+        tax:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Tax
+          example: 10.11
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/DetailedTaxLine'
+          type: array
+          title: Tax Lines
+        tip:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Tip
+        total:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Total
+        total_quantity:
+          allOf:
+            - $ref: '#/components/schemas/DetailedFloatField'
+          title: Total Quantity
+          description: New. Total quantity found on a document. Should be equal to the sum of line item quantities, but depends on the vendor.
+        total_weight:
+          allOf:
+            - $ref: '#/components/schemas/DetailedField'
+          title: Total Weight
+          example: 2.655,000 kg
+        tracking_number:
+          $ref: '#/components/schemas/DetailedField'
+        tracking_numbers:
+          items:
+            $ref: '#/components/schemas/DetailedField'
+          type: array
+          title: Tracking Numbers
+        unit_of_measure:
+          $ref: '#/components/schemas/DetailedField'
+        vending_person:
+          $ref: '#/components/schemas/DetailedField'
+        vendor:
+          $ref: '#/components/schemas/DetailedVendor'
+        vendors:
+          items:
+            $ref: '#/components/schemas/DetailedField'
+          type: array
+          title: Vendors
+          description: All found vendors on the document, including those found with vendor.abn_number
+        vin_number:
+          $ref: '#/components/schemas/DetailedField'
+        weights:
+          items:
+            $ref: '#/components/schemas/DetailedField'
+          type: array
+          title: Weights
+      additionalProperties: false
+      type: object
+      required:
+        - created_date
+        - id
+        - img_file_name
+        - img_url
+        - img_thumbnail_url
+        - pdf_url
+        - ocr_text
+        - reference_number
+        - updated_date
+        - account_number
+        - bill_to
+        - category
+        - confidence_details
+        - currency_code
+        - date
+        - discount
+        - due_date
+        - invoice_number
+        - is_money_in
+        - payment
+        - service_start_date
+        - service_end_date
+        - shipping
+        - subtotal
+        - tax
+        - tip
+        - total
+        - vendor
+      title: DetailedDocument
+    Meta:
+      properties:
+        documents_per_page:
+          type: integer
+          title: Documents Per Page
+          example: 100
+        page_number:
+          type: integer
+          title: Page Number
+          example: 1
+        total_pages:
+          type: integer
+          title: Total Pages
+          example: 146
+        total_results:
+          type: integer
+          title: Total Results
+          example: 14534
+      additionalProperties: false
+      type: object
+      required:
+        - documents_per_page
+        - page_number
+        - total_pages
+        - total_results
+      title: Meta
+    DetailedDocuments:
+      properties:
+        documents:
+          items:
+            $ref: '#/components/schemas/DetailedDocument'
+          type: array
+          title: Documents
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+      type: object
+      required:
+        - documents
+        - meta
+      title: DetailedDocuments
+    Barcode:
+      properties:
+        data:
+          type: string
+          title: Data
+        type:
+          type: string
+          title: Type
+      additionalProperties: false
+      type: object
+      required:
+        - data
+        - type
+      title: Barcode
+    BillTo:
+      properties:
+        name:
+          type: string
+          title: Name
+        address:
+          type: string
+          title: Address
+        email:
+          type: string
+          title: Email
+        parsed_address:
+          $ref: '#/components/schemas/ParsedAddress'
+        phone_number:
+          type: string
+          title: Phone Number
+        reg_number:
+          type: string
+          title: Reg Number
+          description: Payer Registration Number
+        vat_number:
+          type: string
+          title: Vat Number
+      additionalProperties: false
+      type: object
+      title: BillTo
+    Payment:
+      properties:
+        card_number:
+          type: string
+          title: Card Number
+        display_name:
+          type: string
+          title: Display Name
+          example: Visa
+        terms:
+          type: string
+          title: Terms
+          example: 15 days
+        type:
+          type: string
+          title: Type
+      additionalProperties: false
+      type: object
+      required:
+        - card_number
+        - display_name
+        - type
+      title: Payment
+    ShipTo:
+      properties:
+        address:
+          type: string
+          title: Address
+        name:
+          type: string
+          title: Name
+        parsed_address:
+          $ref: '#/components/schemas/ParsedAddress'
+      additionalProperties: false
+      type: object
+      title: ShipTo
+    TaxLine:
+      properties:
+        order:
+          type: integer
+          title: Order
+        name:
+          type: string
+          title: Name
+        rate:
+          type: number
+          title: Rate
+        total:
+          type: number
+          title: Total
+        base:
+          type: number
+          title: Base
+        code:
+          type: string
+          title: Code
+          description: '**New**, added 2023-03-23'
+      additionalProperties: false
+      type: object
+      required:
+        - order
+        - name
+        - rate
+        - total
+        - base
+      title: TaxLine
+    BankBreakdown:
+      properties:
+        vendor_bank_name:
+          type: string
+          title: Vendor Bank Name
+        vendor_bank_swift:
+          type: string
+          title: Vendor Bank Swift
+        vendor_iban:
+          type: string
+          title: Vendor Iban
+        vendor_bank_number:
+          type: string
+          title: Vendor Bank Number
+        vendor_bank_numbers:
+          items:
+            type: string
+          type: array
+          title: Vendor Bank Numbers
+      additionalProperties: false
+      type: object
+      required:
+        - vendor_bank_name
+        - vendor_bank_swift
+        - vendor_iban
+        - vendor_bank_number
+        - vendor_bank_numbers
+      title: BankBreakdown
+    Vendor:
+      properties:
+        abn_number:
+          type: string
+          title: Abn Number
+          description: ABN Number (Australian Business Number
+        account_currency:
+          type: string
+          title: Account Currency
+        account_number:
+          type: string
+          title: Account Number
+          description: Bank account number, e.g. routing number
+        address:
+          type: string
+          title: Address
+        bank_name:
+          type: string
+          title: Bank Name
+        bank_number:
+          type: string
+          title: Bank Number
+        bank_swift:
+          type: string
+          title: Bank Swift
+        biller_code:
+          type: string
+          title: Biller Code
+          description: '**New**, added 2023-03-23'
+        email:
+          type: string
+          title: Email
+        external_id:
+          type: string
+          title: External Id
+        fax_number:
+          type: string
+          title: Fax Number
+        full_address:
+          type: string
+          title: Full Address
+        iban:
+          type: string
+          title: Iban
+        name:
+          type: string
+          title: Name
+        phone_number:
+          type: string
+          title: Phone Number
+        raw_name:
+          type: string
+          title: Raw Name
+          description: Vendor name found on the document
+        reg_number:
+          type: string
+          title: Reg Number
+          description: Vendor Registration Number
+        types:
+          type: string
+          title: Types
+        order_number:
+          type: string
+          title: Order Number
+          description: New, added 2023-03-23. Sales order number
+        vat_number:
+          type: string
+          title: Vat Number
+        web:
+          type: string
+          title: Web
+        bank_breakdown:
+          items:
+            $ref: '#/components/schemas/BankBreakdown'
+          type: array
+          title: Bank Breakdown
+          example:
+            - vendor_bank_name: Commerzbank Lüchow
+              vendor_bank_swift: COBADEFFXXX
+              vendor_iban: DE53 2584 1403 0545 4350 00
+              vendor_bank_number: '12313223'
+              vendor_bank_numbers:
+                - '12313223051242'
+        category:
+          type: string
+          title: Category
+        external_ids:
+          items:
+            $ref: '#/components/schemas/VendorExternalIds'
+          type: array
+          title: External Ids
+        lat:
+          type: number
+          title: Lat
+        lng:
+          type: number
+          title: Lng
+        logo:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Logo
+        map_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Map Url
+        parsed_address:
+          $ref: '#/components/schemas/ParsedAddress'
+        raw_address:
+          type: string
+          title: Raw Address
+          description: Vendor address found on the document
+        type:
+          type: string
+          enum:
+            - other
+            - Grocery
+            - Fuel
+            - Hardware
+            - Taxi
+            - Restaurant
+            - Online Shopping
+            - Fast Food
+            - Hotel
+            - Utilities
+            - Department Store
+            - Convenience
+            - Food
+            - General Contractor
+            - Car Repair
+            - Drugstore / Pharmacy
+            - Coffee
+            - Parking
+            - Nurseries & Gardening
+            - Auto Parts
+            - Airlines
+            - Health
+            - Bakery
+            - Building Supplies
+            - Office Equipment
+            - Transportation
+            - Furniture Store
+            - Bar
+            - Electronics Store
+            - Clothing Store
+            - Shipping
+            - Online Service
+            - Insurance
+            - Toll
+            - Pizza
+            - Car Rental
+            - Brewery
+            - Bank
+            - Home Goods Store
+            - Arts & Crafts Store
+            - Car Wash
+            - Real Estate Service
+            - Shoe Store
+            - Cafe
+            - Laundry
+            - ATM
+            - Book Store
+            - Construction & Landscaping
+            - Airport
+            - Hair Care
+            - Ice Cream Shop
+            - Florist
+            - Auto
+            - Gym / Fitness Center
+            - Movie Theater
+            - Entertainment
+            - Farm
+            - Market
+            - Rent
+            - Garage
+            - Food Court
+            - Baggage
+            - Daycare
+            - Catering
+            - Airport Parking
+          title: Type
+          description: Vendor type predicted from Veryfi list, e.g. Taxi
+      additionalProperties: false
+      type: object
+      required:
+        - address
+        - fax_number
+        - name
+        - phone_number
+        - logo
+        - raw_address
+        - type
+      title: Vendor
+    Document:
+      properties:
+        accounting_entry_type:
+          type: string
+          enum:
+            - debit
+            - credit
+          title: Accounting Entry Type
+          example: credit
+        created_date:
+          type: string
+          format: date-time
+          title: Created Date
+          example: '2022-05-06 14:35:02'
+        custom_fields:
+          $ref: '#/components/schemas/CustomFields'
+        duplicate_of:
+          type: integer
+          title: Duplicate Of
+          description: Duplicated Document ID
+        exch_rate:
+          type: number
+          title: Exch Rate
+        external_id:
+          type: string
+          title: External Id
+          description: Use this if you would like to assign your own ID to documents
+          default: ''
+          example: '123456789'
+        id:
+          type: integer
+          title: Id
+        img_blur:
+          type: boolean
+          title: Img Blur
+        img_file_name:
+          type: string
+          title: Img File Name
+        img_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Img Url
+          description: Secure URL to either original image or pdf create from it, with expiration of 15 minutes from the response time
+        img_thumbnail_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Img Thumbnail Url
+          description: Secure URL to thumbnail, with expiration of 15 minutes from the response time
+        is_approved:
+          type: boolean
+          title: Is Approved
+        is_blurry:
+          items:
+            type: boolean
+          type: array
+          title: Is Blurry
+          description: An array showing if each processed page is blurry
+        is_document:
+          type: boolean
+          title: Is Document
+        is_duplicate:
+          type: boolean
+          title: Is Duplicate
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItem'
+          type: array
+          title: Line Items
+        model:
+          type: string
+          title: Model
+        notes:
+          type: string
+          title: Notes
+        pdf_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Pdf Url
+          description: Secure URL to pdf created from original documents, with expiration of 15 minutes from the response time
+        ocr_text:
+          type: string
+          title: Ocr Text
+        reference_number:
+          type: string
+          title: Reference Number
+          description: An id for reference. Use id instead
+          deprecated: true
+        status:
+          type: string
+          enum:
+            - in_progress
+            - processed
+            - reviewed
+            - reimbursed
+            - archived
+          title: Status
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        total_pages:
+          type: integer
+          title: Total Pages
+          description: Total sent pages
+        updated_date:
+          type: string
+          format: date-time
+          title: Updated Date
+          example: '2022-05-06 14:35:02'
+        warnings:
+          items:
+            type: string
+          type: array
+          title: Warnings
+        account_number:
+          type: string
+          title: Account Number
+          description: Payee bank account number
+        balance:
+          type: string
+          title: Balance
+        barcodes:
+          items:
+            $ref: '#/components/schemas/Barcode'
+          type: array
+          title: Barcodes
+        bill_to:
+          $ref: '#/components/schemas/BillTo'
+        cashback:
+          type: string
+          title: Cashback
+        category:
+          type: string
+          title: Category
+          description: 'A category predicted from sent categories, user categories or default ones. '
+        currency_code:
+          type: string
+          title: Currency Code
+        date:
+          type: string
+          format: date-time
+          title: Date
+          example: '2022-05-06 14:35:02'
+        default_category:
+          type: string
+          enum:
+            - other
+            - Meals & Entertainment
+            - Job Supplies
+            - Travel
+            - Automotive
+            - Food and Groceries
+            - Office Supplies & Software
+            - Transportation
+            - Repairs & Maintenance
+            - Utilities
+            - Gifts & Donations
+            - Advertising & Marketing
+            - Legal & Professional Services
+            - Healthcare
+            - Contractors
+            - Rent & Lease
+            - Postage & Delivery
+            - Insurance
+            - Household
+            - Clothing & Shoes
+            - Taxes & Licenses
+            - Payroll Expenses
+            - Bank Charges & Fees
+            - Dues and Subscriptions
+            - Training & Education
+            - Interest Paid
+          title: Default Category
+          description: A category predicted from Veryfi list
+        delivery_date:
+          type: string
+          format: date-time
+          title: Delivery Date
+          example: '2022-05-06 14:35:02'
+        delivery_note_number:
+          type: string
+          title: Delivery Note Number
+          description: New, added 2023-03-23.
+        discount:
+          type: number
+          title: Discount
+        document_reference_number:
+          type: string
+          title: Document Reference Number
+        document_title:
+          type: string
+          title: Document Title
+        document_type:
+          type: string
+          enum:
+            - other
+            - receipt
+            - invoice
+            - purchase_order
+            - check
+            - w9
+            - remittance_advice
+          title: Document Type
+        due_date:
+          type: string
+          format: date-time
+          title: Due Date
+          example: '2022-05-06 14:35:02'
+        final_balance:
+          type: number
+          title: Final Balance
+          description: '**New**, added 2023-03-23'
+        guest_count:
+          type: string
+          title: Guest Count
+          description: Number of guests/seats extracted, e.g. for a restaurant receipt or hotel invoice.
+          example: 1, 2, 4
+        incoterms:
+          type: string
+          title: Incoterms
+        insurance:
+          type: number
+          title: Insurance
+        invoice_number:
+          type: string
+          title: Invoice Number
+        is_money_in:
+          type: boolean
+          title: Is Money In
+          description: true if refund or credit note
+        license_plate_number:
+          type: string
+          title: License Plate Number
+        order_date:
+          type: string
+          format: date
+          title: Order Date
+        payment:
+          $ref: '#/components/schemas/Payment'
+        previous_balance:
+          type: number
+          title: Previous Balance
+        purchase_order_number:
+          type: string
+          title: Purchase Order Number
+          example: 2312/2019
+        rounding:
+          type: number
+          title: Rounding
+        server_name:
+          type: string
+          title: Server Name
+          description: Restaurant's server name
+        service_start_date:
+          type: string
+          format: date
+          title: Service Start Date
+        service_end_date:
+          type: string
+          format: date
+          title: Service End Date
+        ship_date:
+          type: string
+          format: date
+          title: Ship Date
+          example: '2022-05-06'
+        ship_to:
+          $ref: '#/components/schemas/ShipTo'
+        shipping:
+          type: number
+          title: Shipping
+        store_number:
+          type: string
+          title: Store Number
+        subtotal:
+          type: number
+          title: Subtotal
+          example: 97.11
+        tax:
+          type: number
+          title: Tax
+          example: 10.11
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxLine'
+          type: array
+          title: Tax Lines
+        tip:
+          type: number
+          title: Tip
+        total:
+          type: number
+          title: Total
+        total_quantity:
+          type: number
+          title: Total Quantity
+          description: New. Total quantity found on a document. Should be equal to the sum of line item quantities, but depends on the vendor.
+        total_weight:
+          type: string
+          title: Total Weight
+          example: 2.655,000 kg
+        tracking_number:
+          type: string
+          title: Tracking Number
+        tracking_numbers:
+          items:
+            type: string
+          type: array
+          title: Tracking Numbers
+        unit_of_measure:
+          type: string
+          title: Unit Of Measure
+        vending_person:
+          type: string
+          title: Vending Person
+        vendor:
+          $ref: '#/components/schemas/Vendor'
+        vendors:
+          items:
+            type: string
+          type: array
+          title: Vendors
+          description: All found vendors on the document, including those found with vendor.abn_number
+        vin_number:
+          type: string
+          title: Vin Number
+        weights:
+          items:
+            type: string
+          type: array
+          title: Weights
+      additionalProperties: false
+      type: object
+      required:
+        - reference_number
+        - meta
+        - vendor_lng
+        - duplicate_of
+        - order_date
+        - document_reference_number
+        - vat_number
+        - is_blurry
+        - phone_number
+        - is_duplicate
+        - incoterms
+        - is_money_in
+        - default_category
+        - date
+        - notes
+        - is_document
+        - vendor_iban
+        - payment_type
+        - warnings
+        - bill_to_phone_number
+        - external_id
+        - rounding
+        - service_end_date
+        - vendor_lat
+        - invoice_number
+        - bill_to_reg_number
+        - img_url
+        - currency_code
+        - document_type
+        - total
+        - ocr_text
+        - due_date
+        - vendor_bank_number
+        - payment_display_name
+        - subtotal
+        - bill_to_email
+        - vendor_bank_name
+        - bill_to_address
+        - category
+        - img_thumbnail_url
+        - card_number
+        - bill_to_name
+        - vendor
+        - document_title
+        - discount
+        - raw_vendor_name
+        - line_items
+        - tracking_number
+        - payment_terms
+        - id
+        - purchase_order_number
+        - delivery_date
+        - total_weight
+        - tip
+        - vendor_account_number
+        - insurance
+        - abn_number
+        - ship_date
+        - service_start_date
+        - vendor_bank_swift
+        - tax
+        - tags
+        - tax_lines
+      title: Document
+    DocumentPOSTJSONRequest:
+      properties:
+        file_data:
+          type: string
+          title: File Data
+          description: Base64 encoded string, e.g. 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII='
+        file_url:
+          type: string
+          title: File Url
+        file_urls:
+          items:
+            type: string
+          type: array
+          title: File Urls
+        package_path:
+          type: string
+          title: Package Path
+          description: A path to file in S3 bucket, e.g. 'some/receipt.jpg
+        bucket:
+          type: string
+          title: Bucket
+          description: An S3 bucket for 'package_path', e.g. 'documents'
+        file_name:
+          type: string
+          title: File Name
+          description: Optional filename, helps to determine file type
+        categories:
+          items:
+            type: string
+          type: array
+          title: Categories
+          description: List of categories, if you would like to use your own list for returned category. Disabled with boost_mode.
+          default: []
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: List of tags
+          default: []
         max_pages_to_process:
           type: integer
-          description: 'When sending a long document to Veryfi for processing, this parameter controls how many pages of the document will be read and processed, starting from page 1.'
-          example: 10
-        tags:
-          type: array
-          description: 'List of tags'
-          items:
-            type: string
-            example: 'tag1'
-        categories:
-          type: array
-          description: 'List of categories to use when categorizing the document'
-          items:
-            type: string
-          example:
-           - 'Advertising & Marketing'
-           - 'Automotive'
-           - 'Bank Charges & Fees'
-           - 'Legal & Professional Services'
-           - 'Insurance'
-           - 'Meals & Entertainment'
-           - 'Office Supplies & Software'
-           - 'Taxes & Licenses'
-           - 'Travel'
-           - 'Automotive'
-           - 'Rent & Lease'
-           - 'Repairs & Maintenance'
-           - 'Payroll'
-           - 'Utilities'
-           - 'Job Supplies'
-           - 'Grocery'
-      
-    OperationStatus:
+          maximum: 15
+          title: Max Pages To Process
+          description: Limit processing to number of pages. A page is a pdf page or an image
+          example: 1
+        boost_mode:
+          type: boolean
+          title: Boost Mode
+          description: Whether boost mode should be enabled. When set to `true` API will skip data enrichment steps, but will process the document faster.
+          default: false
+        auto_delete:
+          type: boolean
+          title: Auto Delete
+          description: Delete this document from Veryfi after data has been extracted
+          default: false
+        external_id:
+          type: string
+          title: External Id
+          description: Use this if you would like to assign your own ID to documents
+          default: ''
+          example: '123456789'
+        async:
+          type: boolean
+          title: Async
+          description: Processing files asynchronous. [Click here](https://hub.veryfi.com/api/docs/documents/process/#asynchronous) for more details.
+          default: false
+        bounding_boxes:
+          type: boolean
+          title: Bounding Boxes
+          description: Whether to return 'bounding_box' for extracted fields in response
+          default: false
+        confidence_details:
+          type: boolean
+          title: Confidence Details
+          description: Whether to return 'ocr_score' and 'score' for extracted fields in response
+          default: false
+        detect_blur:
+          type: boolean
+          title: Detect Blur
+          description: Whether to return 'is_blurry' in response. Deprecated, please add is_blurry to Client settings
+          default: false
+          deprecated: true
+        parse_address:
+          type: boolean
+          title: Parse Address
+          description: Whether to break addresses into components. Adds ['parsed_address'] to response
+          default: false
+      additionalProperties: false
       type: object
+      title: DocumentPOSTJSONRequest
+      example:
+        file_url: https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg
+        auto_delete: true
+    DocumentPOSTMultipartRequest:
+      properties:
+        file_data:
+          type: string
+          title: File Data
+          description: Base64 encoded string, e.g. 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII='
+        file_url:
+          type: string
+          title: File Url
+        file_urls:
+          items:
+            type: string
+          type: array
+          title: File Urls
+        package_path:
+          type: string
+          title: Package Path
+          description: A path to file in S3 bucket, e.g. 'some/receipt.jpg
+        bucket:
+          type: string
+          title: Bucket
+          description: An S3 bucket for 'package_path', e.g. 'documents'
+        file_name:
+          type: string
+          title: File Name
+          description: Optional filename, helps to determine file type
+        file:
+          type: string
+          format: binary
+          title: File
+          description: Binary file. Submitting zipped document through this parameter is the fastest way.
+        categories:
+          items:
+            type: string
+          type: array
+          title: Categories
+          description: List of categories, if you would like to use your own list for returned category. Disabled with boost_mode.
+          default: []
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: List of tags
+          default: []
+        max_pages_to_process:
+          type: integer
+          maximum: 15
+          title: Max Pages To Process
+          description: Limit processing to number of pages. A page is a pdf page or an image
+          example: 1
+        boost_mode:
+          type: boolean
+          title: Boost Mode
+          description: Whether boost mode should be enabled. When set to `true` API will skip data enrichment steps, but will process the document faster.
+          default: false
+        auto_delete:
+          type: boolean
+          title: Auto Delete
+          description: Delete this document from Veryfi after data has been extracted
+          default: false
+        external_id:
+          type: string
+          title: External Id
+          description: Use this if you would like to assign your own ID to documents
+          default: ''
+          example: '123456789'
+        async:
+          type: boolean
+          title: Async
+          description: Processing files asynchronous. [Click here](https://hub.veryfi.com/api/docs/documents/process/#asynchronous) for more details.
+          default: false
+        bounding_boxes:
+          type: boolean
+          title: Bounding Boxes
+          description: Whether to return 'bounding_box' for extracted fields in response
+          default: false
+        confidence_details:
+          type: boolean
+          title: Confidence Details
+          description: Whether to return 'ocr_score' and 'score' for extracted fields in response
+          default: false
+        detect_blur:
+          type: boolean
+          title: Detect Blur
+          description: Whether to return 'is_blurry' in response. Deprecated, please add is_blurry to Client settings
+          default: false
+          deprecated: true
+        parse_address:
+          type: boolean
+          title: Parse Address
+          description: Whether to break addresses into components. Adds ['parsed_address'] to response
+          default: false
+      additionalProperties: false
+      type: object
+      title: DocumentPOSTMultipartRequest
+      example:
+        file_url: https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg
+        auto_delete: true
+    TaxLinePUTParameters:
+      properties:
+        base:
+          type: number
+          title: Base
+        name:
+          type: string
+          title: Name
+        order:
+          type: integer
+          title: Order
+        rate:
+          type: number
+          title: Rate
+        total:
+          type: number
+          title: Total
+        code:
+          type: string
+          title: Code
+          description: '**New**, added 2023-03-23'
+      additionalProperties: false
+      type: object
+      required:
+        - order
+      title: TaxLinePUTParameters
+    VendorPUTParameters:
+      properties:
+        abn_number:
+          type: string
+          title: Abn Number
+          description: ABN Number (Australian Business Number
+        account_currency:
+          type: string
+          enum:
+            - LRD
+            - ZAR
+            - SOS
+            - VND
+            - MVR
+            - ANG
+            - IRR
+            - FJD
+            - NGN
+            - ZWD
+            - TVD
+            - KRW
+            - GIP
+            - BRL
+            - CAD
+            - QAR
+            - KWD
+            - PKR
+            - PLN
+            - NZD
+            - HTG
+            - XCD
+            - BGN
+            - ARS
+            - BMD
+            - JPY
+            - RSD
+            - BSD
+            - OMR
+            - SGD
+            - HRK
+            - KPW
+            - PAB
+            - EGP
+            - AFN
+            - RUB
+            - GHC
+            - VEF
+            - SVC
+            - AED
+            - DOP
+            - PHP
+            - MXN
+            - INR
+            - GYD
+            - BND
+            - BOB
+            - MYR
+            - AZN
+            - SYP
+            - SRD
+            - KGS
+            - MKD
+            - BWP
+            - NIO
+            - NPR
+            - CNY
+            - JEP
+            - GBP
+            - LBP
+            - EEK
+            - AMD
+            - AWG
+            - IDR
+            - UYU
+            - SEK
+            - KHR
+            - LKR
+            - BZD
+            - BAM
+            - ILS
+            - PYG
+            - UAH
+            - GGP
+            - KZT
+            - FKP
+            - NOK
+            - ALL
+            - LSL
+            - HKD
+            - NAD
+            - EUR
+            - SHP
+            - TRY
+            - SZL
+            - KYD
+            - USD
+            - MNT
+            - HNL
+            - BHD
+            - RON
+            - IMP
+            - SCR
+            - THB
+            - COP
+            - CRC
+            - CUP
+            - GTQ
+            - LTL
+            - AUD
+            - UZS
+            - TTD
+            - MOP
+            - CZK
+            - TRL
+            - BBD
+            - DKK
+            - SBD
+            - CLP
+            - JMD
+            - GEL
+            - YER
+            - TWD
+            - MUR
+            - UGX
+            - ISK
+            - LAK
+            - MZN
+            - PEN
+            - IQD
+            - LVL
+            - HUF
+            - BYR
+            - CHF
+            - SAR
+          title: Account Currency
+        account_number:
+          type: string
+          title: Account Number
+          description: Account number, e.g. routing number
+        address:
+          type: string
+          title: Address
+          example: 1912 Harvest Lane New York, NY 12210
+        bank_name:
+          type: string
+          title: Bank Name
+        bank_number:
+          type: string
+          title: Bank Number
+        bank_swift:
+          type: string
+          title: Bank Swift
+        biller_code:
+          type: string
+          title: Biller Code
+          description: '**New**, added 2023-03-23'
+        email:
+          type: string
+          title: Email
+        external_id:
+          type: string
+          title: External Id
+        fax_number:
+          type: string
+          title: Fax Number
+        full_address:
+          type: string
+          title: Full Address
+        iban:
+          type: string
+          title: Iban
+          example: International Bank Account Number (IBAN)
+        name:
+          type: string
+          title: Name
+          example: In-n-out Burger
+        phone_number:
+          type: string
+          title: Phone Number
+        raw_name:
+          type: string
+          title: Raw Name
+        reg_number:
+          type: string
+          title: Reg Number
+          description: Vendor Registration Number
+        types:
+          type: string
+          title: Types
+        order_number:
+          type: string
+          title: Order Number
+          description: '**New**, added 2023-03-23'
+        vat_number:
+          type: string
+          title: Vat Number
+        web:
+          type: string
+          title: Web
+      additionalProperties: false
+      type: object
+      title: VendorPUTParameters
+    BillToPUTParameters:
+      properties:
+        name:
+          type: string
+          title: Name
+        address:
+          type: string
+          title: Address
+        vat_number:
+          type: string
+          title: Vat Number
+      additionalProperties: false
+      type: object
+      title: BillToPUTParameters
+    ShipToPUTParameters:
+      properties:
+        name:
+          type: string
+          title: Name
+        address:
+          type: string
+          title: Address
+      additionalProperties: false
+      type: object
+      title: ShipToPUTParameters
+    PaymentPUTParameters:
+      properties:
+        terms:
+          type: string
+          title: Terms
+          example: 15 days
+      additionalProperties: false
+      type: object
+      title: PaymentPUTParameters
+    DocumentPUTRequest:
+      properties:
+        is_billable:
+          type: boolean
+          title: Is Billable
+        is_approved:
+          type: boolean
+          title: Is Approved
+        is_duplicate:
+          type: boolean
+          title: Is Duplicate
+        is_money_in:
+          type: boolean
+          title: Is Money In
+        account_number:
+          type: string
+          title: Account Number
+        category:
+          type: string
+          title: Category
+        currency_code:
+          type: string
+          enum:
+            - LRD
+            - ZAR
+            - SOS
+            - VND
+            - MVR
+            - ANG
+            - IRR
+            - FJD
+            - NGN
+            - ZWD
+            - TVD
+            - KRW
+            - GIP
+            - BRL
+            - CAD
+            - QAR
+            - KWD
+            - PKR
+            - PLN
+            - NZD
+            - HTG
+            - XCD
+            - BGN
+            - ARS
+            - BMD
+            - JPY
+            - RSD
+            - BSD
+            - OMR
+            - SGD
+            - HRK
+            - KPW
+            - PAB
+            - EGP
+            - AFN
+            - RUB
+            - GHC
+            - VEF
+            - SVC
+            - AED
+            - DOP
+            - PHP
+            - MXN
+            - INR
+            - GYD
+            - BND
+            - BOB
+            - MYR
+            - AZN
+            - SYP
+            - SRD
+            - KGS
+            - MKD
+            - BWP
+            - NIO
+            - NPR
+            - CNY
+            - JEP
+            - GBP
+            - LBP
+            - EEK
+            - AMD
+            - AWG
+            - IDR
+            - UYU
+            - SEK
+            - KHR
+            - LKR
+            - BZD
+            - BAM
+            - ILS
+            - PYG
+            - UAH
+            - GGP
+            - KZT
+            - FKP
+            - NOK
+            - ALL
+            - LSL
+            - HKD
+            - NAD
+            - EUR
+            - SHP
+            - TRY
+            - SZL
+            - KYD
+            - USD
+            - MNT
+            - HNL
+            - BHD
+            - RON
+            - IMP
+            - SCR
+            - THB
+            - COP
+            - CRC
+            - CUP
+            - GTQ
+            - LTL
+            - AUD
+            - UZS
+            - TTD
+            - MOP
+            - CZK
+            - TRL
+            - BBD
+            - DKK
+            - SBD
+            - CLP
+            - JMD
+            - GEL
+            - YER
+            - TWD
+            - MUR
+            - UGX
+            - ISK
+            - LAK
+            - MZN
+            - PEN
+            - IQD
+            - LVL
+            - HUF
+            - BYR
+            - CHF
+            - SAR
+          title: Currency Code
+          example: LRD
+        delivery_note_number:
+          type: string
+          title: Delivery Note Number
+          description: New, added 2023-03-23.
+        discount:
+          type: number
+          title: Discount
+        document_reference_number:
+          type: string
+          title: Document Reference Number
+        document_title:
+          type: string
+          title: Document Title
+        document_type:
+          type: string
+          enum:
+            - receipt
+            - long_receipt
+            - invoice
+            - credit_note
+            - purchase_order
+            - deposit
+            - check
+            - other
+          title: Document Type
+          example: check
+        exch_rate:
+          type: number
+          title: Exch Rate
+        external_id:
+          type: string
+          title: External Id
+        invoice_number:
+          type: string
+          title: Invoice Number
+        incoterms:
+          type: string
+          title: Incoterms
+        insurance:
+          type: number
+          title: Insurance
+        notes:
+          type: string
+          title: Notes
+        purchase_order_number:
+          type: string
+          title: Purchase Order Number
+          example: 2312/2019
+        shipping:
+          type: number
+          title: Shipping
+        status:
+          type: string
+          enum:
+            - processed
+            - reviewed
+            - archived
+          title: Status
+          example: in_progress
+        store_number:
+          type: string
+          title: Store Number
+        subtotal:
+          type: number
+          title: Subtotal
+        tax:
+          type: number
+          title: Tax
+        tip:
+          type: number
+          title: Tip
+        total:
+          type: number
+          title: Total
+        total_weight:
+          type: string
+          title: Total Weight
+          example: 100kg
+        total_quantity:
+          type: number
+          title: Total Quantity
+          description: New. Total quantity found on a document. Should be equal to the sum of line item quantities, but depends on the vendor.
+        tracking_number:
+          type: string
+          title: Tracking Number
+        tracking_numbers:
+          items:
+            type: string
+          type: array
+          title: Tracking Numbers
+        vending_person:
+          type: string
+          title: Vending Person
+        date:
+          type: string
+          format: date-time
+          title: Date
+          description: Limit to past is 10 years, limit to future is 3 months
+          example: '2022-05-06 14:35:02'
+        due_date:
+          type: string
+          format: date-time
+          title: Due Date
+          example: '2022-05-06 14:35:02'
+        service_start_date:
+          type: string
+          format: date
+          title: Service Start Date
+          example: '2022-01-31'
+        service_end_date:
+          type: string
+          format: date
+          title: Service End Date
+          example: '2022-01-31'
+        line_items:
+          items:
+            $ref: '#/components/schemas/LineItemPUTParameters'
+          type: array
+          title: Line Items
+        tax_lines:
+          items:
+            $ref: '#/components/schemas/TaxLinePUTParameters'
+          type: array
+          title: Tax Lines
+        vendor:
+          $ref: '#/components/schemas/VendorPUTParameters'
+        bill_to:
+          $ref: '#/components/schemas/BillToPUTParameters'
+        ship_to:
+          $ref: '#/components/schemas/ShipToPUTParameters'
+        payment:
+          $ref: '#/components/schemas/PaymentPUTParameters'
+      additionalProperties: false
+      type: object
+      title: DocumentPUTRequest
+      example:
+        external_id: example id
+    Documents:
+      properties:
+        documents:
+          items:
+            $ref: '#/components/schemas/Document'
+          type: array
+          title: Documents
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+      type: object
+      required:
+        - documents
+        - meta
+      title: Documents
+    OperationStatus:
       properties:
         status:
           type: string
-        message:
-          type: string
+          enum:
+            - fail
+            - ok
+          title: Status
         error:
           type: string
-        
+          title: Error
+        message:
+          type: string
+          title: Message
+        details:
+          type: string
+          title: Details
+      type: object
+      required:
+        - status
+        - message
+      title: OperationStatus
+  responses:
+    OperationStatus:
+      description: OperationStatus
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OperationStatus'
   parameters:
     DocumentId:
       name: document_id
       in: path
       description: ID of the document.
       required: true
+      deprecated: false
+      allowEmptyValue: false
+      style: simple
+      explode: false
+      allowReserved: false
       schema:
         type: integer
         format: int64
-        
     LineItemId:
       name: line_item_id
       in: path
       description: ID of the line item.
       required: true
+      deprecated: false
+      allowEmptyValue: false
+      style: simple
+      explode: false
+      allowReserved: false
       schema:
         type: integer
         format: int64
-        
-    TagId:
-      name: tag_id
-      in: path
-      description: ID of the tag
-      required: true
-      schema:
-        type: integer
-        format: int64
-        
     Query:
       name: q
       in: query
       description: Query request to search in document's `ocr_text`.
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
         type: string
-        
-    Tag:
-      name: tag
-      in: query
-      description: Tag to search.
-      schema:
-        type: string
-        
     ExternalId:
       name: external_id
       in: query
       description: External Id to search.
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
         type: string
-        
     CreatedGte:
       name: created__gte
       in: query
       description: Start date to search(including it).
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
         type: string
         format: date-time
-        
     CreatedGt:
       name: created__gt
       in: query
       description: Start date to search(including it).
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
         type: string
         format: date-time
-        
     CreatedLte:
       name: created__lte
       in: query
       description: End date to search(including it).
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
         type: string
         format: date-time
-        
     CreatedLt:
       name: created__lt
       in: query
       description: End date to search(including it).
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
         type: string
         format: date-time
-        
     ReturnAuditTrail:
       name: return_audit_trail
       in: query
       description: ''
+      required: false
+      deprecated: false
+      allowEmptyValue: false
+      style: form
+      explode: true
+      allowReserved: false
       schema:
-        type: string
-        
+        type: boolean
   requestBodies:
-    DocumentUploadOptions:
-      description: Processing Settings.
+    DocumentPUTRequest:
+      description: Document update options.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentPUTRequest'
       required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DocumentUploadOptions'
-            
-        multipart/form-data:
-          schema:
-            $ref: '#/components/schemas/DocumentUploadOptions'
-                
-    Document:
-      description: Document.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Document'
-                
-    LineItem:
-      description: LineItem.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LineItem'
-                
-    Tag:
-      description: Tag.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Tag'
-        
-  responses:
-    Documents:
-      description: List of documents.
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Document'
     Document:
       description: Document.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Document'
-    LineItems:
-      description: List of line items.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              line_items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LineItem'
-            required:
-            - line_items
+      required: true
     LineItem:
       description: LineItem.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LineItem'
-    Tags:
-      description: List of tags
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              tags:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tag'
-            required:
-            - tags
-    Tag:
-      description: Tag.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Tag'
-    OperationStatus:
-      description: OperationStatus.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OperationStatus'
-            
+            $ref: '#/components/schemas/LineItemPUTParameters'
+      required: true
   securitySchemes:
     ClientId:
       type: apiKey
-      in: header
+      description: Client ID identifies which client is making the requests to Veryfi API. Your Client ID is located in the [Keys](https://hub.veryfi.com/api/settings/keys/) section.
       name: CLIENT-ID
-      
+      in: header
     Authorization:
       type: apiKey
-      in: header
+      description: 'Your Username and API Key makes up an authorization key with the following format: `apikey USERNAME:API_KEY`. You can also find them in the [Keys](https://hub.veryfi.com/api/settings/keys/) section.'
       name: AUTHORIZATION
-      description: 'Example: apiKey $username:$apiKey'
+      in: header
+    Signature:
+      type: apiKey
+      description: Generated value to sign the request. Read more in [Auth]https://hub.veryfi.com/api/docs/auth/) section.
+      name: X-VERYFI-REQUEST-SIGNATURE
+      in: header
+    Timestamp:
+      type: apiKey
+      description: Unix Timestamp integer, required with signature.
+      name: X-VERYFI-REQUEST-TIMESTAMP
+      in: header
+security:
+  - ClientId: []
+    Authorization: []
+tags:
+  - name: documents
+    description: Process and manage documents
+  - name: line-items
+    description: Process and manage line items
