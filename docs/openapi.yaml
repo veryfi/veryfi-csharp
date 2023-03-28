@@ -6,9 +6,9 @@ info:
     email: support@veryfi.com
   version: '1.0'
 servers:
-  - url: https://api.veryfi.com/api/v8/partner
+  - url: https://api.veryfi.com
 paths:
-  /documents/{document_id}/line-items:
+  /api/v8/partner/documents/{document_id}/line-items:
     get:
       tags:
         - line-items
@@ -92,7 +92,7 @@ paths:
         default:
           $ref: '#/components/responses/OperationStatus'
       deprecated: false
-  /documents/{document_id}/line-items/{line_item_id}:
+  /api/v8/partner/documents/{document_id}/line-items/{line_item_id}:
     get:
       tags:
         - line-items
@@ -212,7 +212,7 @@ paths:
         default:
           $ref: '#/components/responses/OperationStatus'
       deprecated: false
-  /schema:
+  /api/v8/partner/schema:
     get:
       tags:
         - documents
@@ -222,7 +222,7 @@ paths:
         '200':
           description: An OpenAPI schema
       deprecated: false
-  /documents:
+  /api/v8/partner/documents:
     get:
       tags:
         - documents
@@ -505,7 +505,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/OperationStatus'
       deprecated: false
-  /documents/{document_id}:
+  /api/v8/partner/documents/{document_id}:
     get:
       tags:
         - documents
@@ -631,254 +631,254 @@ components:
         country_of_origin:
           type: string
           enum:
-            - BD
-            - CU
-            - MD
-            - LT
-            - BN
-            - GD
-            - SI
-            - TN
-            - TZ
             - VA
-            - BO
-            - YE
-            - MT
             - HM
-            - SY
-            - KG
-            - KZ
-            - LI
-            - PK
-            - PE
-            - RS
-            - BV
-            - SZ
-            - TR
-            - NE
-            - GP
-            - BL
-            - TK
-            - SN
             - IT
-            - MR
-            - WS
-            - ST
-            - UM
-            - TH
-            - NZ
-            - BH
-            - HN
-            - TG
-            - RW
-            - KE
-            - BT
-            - LV
-            - PF
-            - BW
-            - PM
-            - NF
-            - SH
-            - JE
-            - YT
-            - VG
-            - SC
-            - GY
-            - AL
-            - LB
-            - MQ
-            - GN
-            - AN
-            - QA
-            - EE
-            - JP
-            - MS
             - SJ
-            - PN
-            - SE
-            - TF
-            - KN
-            - MY
-            - KH
-            - BM
-            - EC
-            - PR
-            - IM
-            - SR
-            - MW
-            - BS
-            - LC
-            - AQ
-            - JO
-            - GA
-            - BG
-            - CY
-            - ME
-            - DM
-            - SV
-            - NC
-            - IO
-            - ER
-            - GG
-            - FR
-            - CD
-            - RO
-            - GF
-            - MP
-            - CN
-            - ES
             - ZM
-            - GH
-            - MO
-            - TO
-            - MM
-            - CA
-            - UZ
-            - AF
-            - KY
-            - HU
-            - MZ
-            - AG
-            - MH
-            - BF
-            - NP
-            - CV
-            - CF
-            - DE
-            - IR
-            - LR
-            - US
-            - CM
-            - NR
-            - FO
-            - DZ
-            - AR
-            - SG
-            - LS
-            - CH
-            - LK
-            - VI
-            - FJ
-            - CX
-            - CG
-            - KM
-            - ZA
-            - DO
-            - HK
-            - IS
-            - AT
-            - ZW
-            - KP
-            - AE
-            - EH
-            - IN
-            - SL
-            - MU
-            - HR
-            - GB
-            - NG
-            - SO
-            - ET
-            - PH
-            - OM
-            - PY
-            - PG
-            - AW
-            - LY
-            - TD
-            - MA
-            - FM
-            - NI
-            - PL
-            - SM
-            - TJ
-            - NA
-            - BA
-            - CO
-            - GR
-            - AM
-            - GW
-            - GS
-            - IE
             - AI
-            - GL
-            - MG
-            - RE
-            - WF
-            - CI
-            - TL
-            - UA
-            - HT
-            - RU
-            - LU
-            - BI
-            - AS
-            - GU
+            - GF
+            - MT
             - SD
-            - UY
-            - BB
-            - CR
-            - ID
-            - KW
-            - SA
-            - DK
-            - JM
-            - SB
-            - VC
-            - GM
-            - MX
-            - MN
-            - FI
-            - CL
-            - EG
-            - CK
+            - AR
+            - NI
+            - MO
+            - LI
             - AX
-            - ML
-            - MC
-            - MF
-            - GT
+            - HU
             - KR
-            - PT
-            - BE
-            - BZ
-            - VE
-            - UG
-            - BY
-            - NU
-            - IL
-            - TC
-            - SK
-            - CZ
-            - TW
-            - BR
-            - GQ
-            - PS
-            - MK
-            - BJ
-            - GE
-            - KI
-            - FK
-            - VU
-            - TM
-            - 'NO'
+            - NF
+            - BD
+            - GB
+            - LK
+            - FM
+            - FJ
+            - EH
+            - SM
+            - SI
+            - SY
             - TV
-            - PA
-            - DJ
-            - VN
-            - MV
-            - CC
-            - PW
+            - PF
             - LA
-            - AO
-            - IQ
-            - AZ
-            - NL
-            - AU
-            - AD
-            - TT
+            - MV
+            - PR
+            - AW
+            - FR
+            - EC
+            - AM
             - GI
+            - PM
+            - PH
+            - BJ
+            - MN
+            - LY
+            - LV
+            - YE
+            - TN
+            - GS
+            - GA
+            - ZA
+            - MZ
+            - WS
+            - MR
+            - SZ
+            - IR
+            - TK
+            - BA
+            - HT
+            - CR
+            - JM
+            - HR
+            - CN
+            - SL
+            - AG
+            - ER
+            - KI
+            - PT
+            - IE
+            - IM
+            - NC
+            - BY
+            - ES
+            - TH
+            - MH
+            - NE
+            - SA
+            - DM
+            - FI
+            - MA
+            - MP
+            - CH
+            - CY
+            - AF
+            - LT
+            - NA
+            - BR
+            - BN
+            - DK
+            - AD
+            - PG
+            - NG
+            - DZ
+            - MU
+            - SK
+            - UZ
+            - GW
+            - BL
+            - JP
+            - ET
+            - CU
+            - SH
+            - AL
+            - KM
+            - KN
+            - WF
+            - GH
+            - SC
+            - TW
+            - BZ
+            - MK
+            - ML
+            - CO
+            - CA
+            - LR
+            - NL
+            - GM
+            - JO
+            - RE
+            - AU
+            - MX
+            - ST
+            - UY
+            - SO
+            - GQ
+            - GE
+            - PS
+            - RO
+            - GG
+            - HK
+            - LB
+            - LU
+            - RU
+            - SN
+            - KZ
+            - BG
+            - CG
+            - BS
+            - HN
+            - KW
+            - KG
+            - AE
+            - UA
+            - MD
+            - CF
+            - CZ
+            - CX
+            - NZ
+            - BW
+            - EE
+            - MQ
+            - TL
+            - DE
+            - GU
+            - UG
+            - MS
+            - VN
+            - AZ
+            - AN
+            - VG
+            - IS
+            - IN
+            - RS
+            - SR
+            - TO
+            - CK
+            - GP
+            - ZW
+            - MW
+            - TG
+            - NP
+            - BF
+            - JE
+            - LS
+            - BT
+            - KE
+            - BB
+            - TJ
+            - CD
+            - SV
+            - GD
+            - ID
+            - TZ
+            - SG
+            - FK
+            - CL
+            - VE
+            - KH
+            - TD
+            - 'NO'
+            - GL
+            - AT
+            - CC
+            - QA
+            - LC
+            - BH
+            - PK
+            - TR
+            - TM
+            - TF
+            - SE
+            - BO
+            - IL
+            - CV
+            - MG
+            - YT
+            - NR
+            - MF
+            - UM
+            - DO
+            - CI
+            - KY
+            - AQ
+            - BE
+            - BM
+            - NU
+            - MM
+            - GT
+            - SB
+            - VU
+            - VI
+            - FO
+            - MC
+            - IO
+            - PN
+            - AS
+            - GN
+            - US
+            - DJ
+            - MY
+            - TC
+            - PE
+            - IQ
+            - CM
+            - OM
+            - PL
+            - AO
+            - GR
+            - BV
+            - BI
+            - VC
+            - RW
+            - PA
+            - GY
+            - ME
+            - PW
+            - PY
+            - EG
+            - TT
+            - KP
           title: Country Of Origin
-          example: BD
+          example: VA
         date:
           type: string
           format: date
@@ -1091,254 +1091,254 @@ components:
         country_of_origin:
           type: string
           enum:
-            - BD
-            - CU
-            - MD
-            - LT
-            - BN
-            - GD
-            - SI
-            - TN
-            - TZ
             - VA
-            - BO
-            - YE
-            - MT
             - HM
-            - SY
-            - KG
-            - KZ
-            - LI
-            - PK
-            - PE
-            - RS
-            - BV
-            - SZ
-            - TR
-            - NE
-            - GP
-            - BL
-            - TK
-            - SN
             - IT
-            - MR
-            - WS
-            - ST
-            - UM
-            - TH
-            - NZ
-            - BH
-            - HN
-            - TG
-            - RW
-            - KE
-            - BT
-            - LV
-            - PF
-            - BW
-            - PM
-            - NF
-            - SH
-            - JE
-            - YT
-            - VG
-            - SC
-            - GY
-            - AL
-            - LB
-            - MQ
-            - GN
-            - AN
-            - QA
-            - EE
-            - JP
-            - MS
             - SJ
-            - PN
-            - SE
-            - TF
-            - KN
-            - MY
-            - KH
-            - BM
-            - EC
-            - PR
-            - IM
-            - SR
-            - MW
-            - BS
-            - LC
-            - AQ
-            - JO
-            - GA
-            - BG
-            - CY
-            - ME
-            - DM
-            - SV
-            - NC
-            - IO
-            - ER
-            - GG
-            - FR
-            - CD
-            - RO
-            - GF
-            - MP
-            - CN
-            - ES
             - ZM
-            - GH
-            - MO
-            - TO
-            - MM
-            - CA
-            - UZ
-            - AF
-            - KY
-            - HU
-            - MZ
-            - AG
-            - MH
-            - BF
-            - NP
-            - CV
-            - CF
-            - DE
-            - IR
-            - LR
-            - US
-            - CM
-            - NR
-            - FO
-            - DZ
-            - AR
-            - SG
-            - LS
-            - CH
-            - LK
-            - VI
-            - FJ
-            - CX
-            - CG
-            - KM
-            - ZA
-            - DO
-            - HK
-            - IS
-            - AT
-            - ZW
-            - KP
-            - AE
-            - EH
-            - IN
-            - SL
-            - MU
-            - HR
-            - GB
-            - NG
-            - SO
-            - ET
-            - PH
-            - OM
-            - PY
-            - PG
-            - AW
-            - LY
-            - TD
-            - MA
-            - FM
-            - NI
-            - PL
-            - SM
-            - TJ
-            - NA
-            - BA
-            - CO
-            - GR
-            - AM
-            - GW
-            - GS
-            - IE
             - AI
-            - GL
-            - MG
-            - RE
-            - WF
-            - CI
-            - TL
-            - UA
-            - HT
-            - RU
-            - LU
-            - BI
-            - AS
-            - GU
+            - GF
+            - MT
             - SD
-            - UY
-            - BB
-            - CR
-            - ID
-            - KW
-            - SA
-            - DK
-            - JM
-            - SB
-            - VC
-            - GM
-            - MX
-            - MN
-            - FI
-            - CL
-            - EG
-            - CK
+            - AR
+            - NI
+            - MO
+            - LI
             - AX
-            - ML
-            - MC
-            - MF
-            - GT
+            - HU
             - KR
-            - PT
-            - BE
-            - BZ
-            - VE
-            - UG
-            - BY
-            - NU
-            - IL
-            - TC
-            - SK
-            - CZ
-            - TW
-            - BR
-            - GQ
-            - PS
-            - MK
-            - BJ
-            - GE
-            - KI
-            - FK
-            - VU
-            - TM
-            - 'NO'
+            - NF
+            - BD
+            - GB
+            - LK
+            - FM
+            - FJ
+            - EH
+            - SM
+            - SI
+            - SY
             - TV
-            - PA
-            - DJ
-            - VN
-            - MV
-            - CC
-            - PW
+            - PF
             - LA
-            - AO
-            - IQ
-            - AZ
-            - NL
-            - AU
-            - AD
-            - TT
+            - MV
+            - PR
+            - AW
+            - FR
+            - EC
+            - AM
             - GI
+            - PM
+            - PH
+            - BJ
+            - MN
+            - LY
+            - LV
+            - YE
+            - TN
+            - GS
+            - GA
+            - ZA
+            - MZ
+            - WS
+            - MR
+            - SZ
+            - IR
+            - TK
+            - BA
+            - HT
+            - CR
+            - JM
+            - HR
+            - CN
+            - SL
+            - AG
+            - ER
+            - KI
+            - PT
+            - IE
+            - IM
+            - NC
+            - BY
+            - ES
+            - TH
+            - MH
+            - NE
+            - SA
+            - DM
+            - FI
+            - MA
+            - MP
+            - CH
+            - CY
+            - AF
+            - LT
+            - NA
+            - BR
+            - BN
+            - DK
+            - AD
+            - PG
+            - NG
+            - DZ
+            - MU
+            - SK
+            - UZ
+            - GW
+            - BL
+            - JP
+            - ET
+            - CU
+            - SH
+            - AL
+            - KM
+            - KN
+            - WF
+            - GH
+            - SC
+            - TW
+            - BZ
+            - MK
+            - ML
+            - CO
+            - CA
+            - LR
+            - NL
+            - GM
+            - JO
+            - RE
+            - AU
+            - MX
+            - ST
+            - UY
+            - SO
+            - GQ
+            - GE
+            - PS
+            - RO
+            - GG
+            - HK
+            - LB
+            - LU
+            - RU
+            - SN
+            - KZ
+            - BG
+            - CG
+            - BS
+            - HN
+            - KW
+            - KG
+            - AE
+            - UA
+            - MD
+            - CF
+            - CZ
+            - CX
+            - NZ
+            - BW
+            - EE
+            - MQ
+            - TL
+            - DE
+            - GU
+            - UG
+            - MS
+            - VN
+            - AZ
+            - AN
+            - VG
+            - IS
+            - IN
+            - RS
+            - SR
+            - TO
+            - CK
+            - GP
+            - ZW
+            - MW
+            - TG
+            - NP
+            - BF
+            - JE
+            - LS
+            - BT
+            - KE
+            - BB
+            - TJ
+            - CD
+            - SV
+            - GD
+            - ID
+            - TZ
+            - SG
+            - FK
+            - CL
+            - VE
+            - KH
+            - TD
+            - 'NO'
+            - GL
+            - AT
+            - CC
+            - QA
+            - LC
+            - BH
+            - PK
+            - TR
+            - TM
+            - TF
+            - SE
+            - BO
+            - IL
+            - CV
+            - MG
+            - YT
+            - NR
+            - MF
+            - UM
+            - DO
+            - CI
+            - KY
+            - AQ
+            - BE
+            - BM
+            - NU
+            - MM
+            - GT
+            - SB
+            - VU
+            - VI
+            - FO
+            - MC
+            - IO
+            - PN
+            - AS
+            - GN
+            - US
+            - DJ
+            - MY
+            - TC
+            - PE
+            - IQ
+            - CM
+            - OM
+            - PL
+            - AO
+            - GR
+            - BV
+            - BI
+            - VC
+            - RW
+            - PA
+            - GY
+            - ME
+            - PW
+            - PY
+            - EG
+            - TT
+            - KP
           title: Country Of Origin
-          example: BD
+          example: VA
         custom_fields:
           allOf:
             - $ref: '#/components/schemas/CustomFields'
@@ -1381,12 +1381,21 @@ components:
       additionalProperties: false
       type: object
       required:
-        - weight
+        - order
+        - tax
+        - type
+        - reference
+        - description
+        - price
+        - total
+        - tax_rate
+        - id
         - section
-        - start_date
-        - end_date
         - sku
-        - hsn
+        - discount
+        - unit_of_measure
+        - date
+        - quantity
       title: LineItem
     DetailedField:
       properties:
@@ -1420,6 +1429,8 @@ components:
           title: Value
       additionalProperties: false
       type: object
+      required:
+        - value
       title: DetailedField
     ParsedAddress:
       properties:
@@ -1730,254 +1741,254 @@ components:
         value:
           type: string
           enum:
-            - BD
-            - CU
-            - MD
-            - LT
-            - BN
-            - GD
-            - SI
-            - TN
-            - TZ
             - VA
-            - BO
-            - YE
-            - MT
             - HM
-            - SY
-            - KG
-            - KZ
-            - LI
-            - PK
-            - PE
-            - RS
-            - BV
-            - SZ
-            - TR
-            - NE
-            - GP
-            - BL
-            - TK
-            - SN
             - IT
-            - MR
-            - WS
-            - ST
-            - UM
-            - TH
-            - NZ
-            - BH
-            - HN
-            - TG
-            - RW
-            - KE
-            - BT
-            - LV
-            - PF
-            - BW
-            - PM
-            - NF
-            - SH
-            - JE
-            - YT
-            - VG
-            - SC
-            - GY
-            - AL
-            - LB
-            - MQ
-            - GN
-            - AN
-            - QA
-            - EE
-            - JP
-            - MS
             - SJ
-            - PN
-            - SE
-            - TF
-            - KN
-            - MY
-            - KH
-            - BM
-            - EC
-            - PR
-            - IM
-            - SR
-            - MW
-            - BS
-            - LC
-            - AQ
-            - JO
-            - GA
-            - BG
-            - CY
-            - ME
-            - DM
-            - SV
-            - NC
-            - IO
-            - ER
-            - GG
-            - FR
-            - CD
-            - RO
-            - GF
-            - MP
-            - CN
-            - ES
             - ZM
-            - GH
-            - MO
-            - TO
-            - MM
-            - CA
-            - UZ
-            - AF
-            - KY
-            - HU
-            - MZ
-            - AG
-            - MH
-            - BF
-            - NP
-            - CV
-            - CF
-            - DE
-            - IR
-            - LR
-            - US
-            - CM
-            - NR
-            - FO
-            - DZ
-            - AR
-            - SG
-            - LS
-            - CH
-            - LK
-            - VI
-            - FJ
-            - CX
-            - CG
-            - KM
-            - ZA
-            - DO
-            - HK
-            - IS
-            - AT
-            - ZW
-            - KP
-            - AE
-            - EH
-            - IN
-            - SL
-            - MU
-            - HR
-            - GB
-            - NG
-            - SO
-            - ET
-            - PH
-            - OM
-            - PY
-            - PG
-            - AW
-            - LY
-            - TD
-            - MA
-            - FM
-            - NI
-            - PL
-            - SM
-            - TJ
-            - NA
-            - BA
-            - CO
-            - GR
-            - AM
-            - GW
-            - GS
-            - IE
             - AI
-            - GL
-            - MG
-            - RE
-            - WF
-            - CI
-            - TL
-            - UA
-            - HT
-            - RU
-            - LU
-            - BI
-            - AS
-            - GU
+            - GF
+            - MT
             - SD
-            - UY
-            - BB
-            - CR
-            - ID
-            - KW
-            - SA
-            - DK
-            - JM
-            - SB
-            - VC
-            - GM
-            - MX
-            - MN
-            - FI
-            - CL
-            - EG
-            - CK
+            - AR
+            - NI
+            - MO
+            - LI
             - AX
-            - ML
-            - MC
-            - MF
-            - GT
+            - HU
             - KR
-            - PT
-            - BE
-            - BZ
-            - VE
-            - UG
-            - BY
-            - NU
-            - IL
-            - TC
-            - SK
-            - CZ
-            - TW
-            - BR
-            - GQ
-            - PS
-            - MK
-            - BJ
-            - GE
-            - KI
-            - FK
-            - VU
-            - TM
-            - 'NO'
+            - NF
+            - BD
+            - GB
+            - LK
+            - FM
+            - FJ
+            - EH
+            - SM
+            - SI
+            - SY
             - TV
-            - PA
-            - DJ
-            - VN
-            - MV
-            - CC
-            - PW
+            - PF
             - LA
-            - AO
-            - IQ
-            - AZ
-            - NL
-            - AU
-            - AD
-            - TT
+            - MV
+            - PR
+            - AW
+            - FR
+            - EC
+            - AM
             - GI
+            - PM
+            - PH
+            - BJ
+            - MN
+            - LY
+            - LV
+            - YE
+            - TN
+            - GS
+            - GA
+            - ZA
+            - MZ
+            - WS
+            - MR
+            - SZ
+            - IR
+            - TK
+            - BA
+            - HT
+            - CR
+            - JM
+            - HR
+            - CN
+            - SL
+            - AG
+            - ER
+            - KI
+            - PT
+            - IE
+            - IM
+            - NC
+            - BY
+            - ES
+            - TH
+            - MH
+            - NE
+            - SA
+            - DM
+            - FI
+            - MA
+            - MP
+            - CH
+            - CY
+            - AF
+            - LT
+            - NA
+            - BR
+            - BN
+            - DK
+            - AD
+            - PG
+            - NG
+            - DZ
+            - MU
+            - SK
+            - UZ
+            - GW
+            - BL
+            - JP
+            - ET
+            - CU
+            - SH
+            - AL
+            - KM
+            - KN
+            - WF
+            - GH
+            - SC
+            - TW
+            - BZ
+            - MK
+            - ML
+            - CO
+            - CA
+            - LR
+            - NL
+            - GM
+            - JO
+            - RE
+            - AU
+            - MX
+            - ST
+            - UY
+            - SO
+            - GQ
+            - GE
+            - PS
+            - RO
+            - GG
+            - HK
+            - LB
+            - LU
+            - RU
+            - SN
+            - KZ
+            - BG
+            - CG
+            - BS
+            - HN
+            - KW
+            - KG
+            - AE
+            - UA
+            - MD
+            - CF
+            - CZ
+            - CX
+            - NZ
+            - BW
+            - EE
+            - MQ
+            - TL
+            - DE
+            - GU
+            - UG
+            - MS
+            - VN
+            - AZ
+            - AN
+            - VG
+            - IS
+            - IN
+            - RS
+            - SR
+            - TO
+            - CK
+            - GP
+            - ZW
+            - MW
+            - TG
+            - NP
+            - BF
+            - JE
+            - LS
+            - BT
+            - KE
+            - BB
+            - TJ
+            - CD
+            - SV
+            - GD
+            - ID
+            - TZ
+            - SG
+            - FK
+            - CL
+            - VE
+            - KH
+            - TD
+            - 'NO'
+            - GL
+            - AT
+            - CC
+            - QA
+            - LC
+            - BH
+            - PK
+            - TR
+            - TM
+            - TF
+            - SE
+            - BO
+            - IL
+            - CV
+            - MG
+            - YT
+            - NR
+            - MF
+            - UM
+            - DO
+            - CI
+            - KY
+            - AQ
+            - BE
+            - BM
+            - NU
+            - MM
+            - GT
+            - SB
+            - VU
+            - VI
+            - FO
+            - MC
+            - IO
+            - PN
+            - AS
+            - GN
+            - US
+            - DJ
+            - MY
+            - TC
+            - PE
+            - IQ
+            - CM
+            - OM
+            - PL
+            - AO
+            - GR
+            - BV
+            - BI
+            - VC
+            - RW
+            - PA
+            - GY
+            - ME
+            - PW
+            - PY
+            - EG
+            - TT
+            - KP
           title: Value
-          example: BD
+          example: VA
       additionalProperties: false
       type: object
       title: DetailedContryOfOriginField
@@ -2299,8 +2310,8 @@ components:
             - Clothing Store
             - Shipping
             - Online Service
-            - Insurance
             - Toll
+            - Insurance
             - Pizza
             - Car Rental
             - Brewery
@@ -2318,8 +2329,8 @@ components:
             - Airport
             - Hair Care
             - Ice Cream Shop
-            - Florist
             - Auto
+            - Florist
             - Gym / Fitness Center
             - Movie Theater
             - Entertainment
@@ -2935,11 +2946,10 @@ components:
       additionalProperties: false
       type: object
       required:
-        - order
+        - total
         - name
         - rate
-        - total
-        - base
+        - order
       title: TaxLine
     BankBreakdown:
       properties:
@@ -3119,8 +3129,8 @@ components:
             - Clothing Store
             - Shipping
             - Online Service
-            - Insurance
             - Toll
+            - Insurance
             - Pizza
             - Car Rental
             - Brewery
@@ -3138,8 +3148,8 @@ components:
             - Airport
             - Hair Care
             - Ice Cream Shop
-            - Florist
             - Auto
+            - Florist
             - Gym / Fitness Center
             - Movie Theater
             - Entertainment
@@ -3506,69 +3516,67 @@ components:
       additionalProperties: false
       type: object
       required:
-        - reference_number
-        - meta
-        - vendor_lng
-        - duplicate_of
-        - order_date
-        - document_reference_number
-        - vat_number
-        - is_blurry
-        - phone_number
-        - is_duplicate
-        - incoterms
-        - is_money_in
-        - default_category
         - date
-        - notes
-        - is_document
-        - vendor_iban
-        - payment_type
-        - warnings
-        - bill_to_phone_number
-        - external_id
-        - rounding
-        - service_end_date
-        - vendor_lat
-        - invoice_number
-        - bill_to_reg_number
-        - img_url
         - currency_code
-        - document_type
-        - total
-        - ocr_text
-        - due_date
-        - vendor_bank_number
-        - payment_display_name
-        - subtotal
-        - bill_to_email
-        - vendor_bank_name
-        - bill_to_address
-        - category
-        - img_thumbnail_url
-        - card_number
-        - bill_to_name
-        - vendor
-        - document_title
-        - discount
-        - raw_vendor_name
-        - line_items
-        - tracking_number
-        - payment_terms
-        - id
-        - purchase_order_number
-        - delivery_date
-        - total_weight
+        - ship_to_address
+        - payment
         - tip
+        - discount
+        - total
+        - category
+        - notes
         - vendor_account_number
-        - insurance
         - abn_number
-        - ship_date
-        - service_start_date
-        - vendor_bank_swift
+        - fax_number
+        - rounding
+        - payment_terms
+        - bill_to_vat_number
+        - invoice_number
+        - external_id
+        - bill_to
         - tax
+        - bill_to_name
+        - vendor_bank_swift
+        - vendor_web
+        - total_weight
+        - vendor_category
+        - due_date
+        - id
+        - ship_date
         - tags
+        - vendor_iban
+        - vendor
+        - vendor_reg_number
         - tax_lines
+        - img_thumbnail_url
+        - document_type
+        - vendor_bank_name
+        - card_number
+        - insurance
+        - vendor_bank_number
+        - tracking_number
+        - purchase_order_number
+        - raw_vendor_name
+        - payment_type
+        - is_duplicate
+        - ship_to_name
+        - document_reference_number
+        - line_items
+        - delivery_date
+        - payment_display_name
+        - cashback
+        - bill_to_address
+        - ship_to
+        - order_date
+        - phone_number
+        - img_url
+        - store_number
+        - subtotal
+        - vat_number
+        - vendor_email
+        - ocr_text
+        - duplicate_of
+        - document_title
       title: Document
     DocumentPOSTJSONRequest:
       properties:
@@ -3658,6 +3666,11 @@ components:
           title: Parse Address
           description: Whether to break addresses into components. Adds ['parsed_address'] to response
           default: false
+        enrich:
+          type: boolean
+          title: Enrich
+          description: Whether to use additional calculation e.g. for line_items.quantity or enrichment for vendor
+          default: true
       additionalProperties: false
       type: object
       title: DocumentPOSTJSONRequest
@@ -3757,6 +3770,11 @@ components:
           title: Parse Address
           description: Whether to break addresses into components. Adds ['parsed_address'] to response
           default: false
+        enrich:
+          type: boolean
+          title: Enrich
+          description: Whether to use additional calculation e.g. for line_items.quantity or enrichment for vendor
+          default: true
       additionalProperties: false
       type: object
       title: DocumentPOSTMultipartRequest
@@ -3798,131 +3816,131 @@ components:
         account_currency:
           type: string
           enum:
-            - LRD
-            - ZAR
-            - SOS
-            - VND
-            - MVR
-            - ANG
-            - IRR
-            - FJD
-            - NGN
-            - ZWD
-            - TVD
-            - KRW
-            - GIP
-            - BRL
-            - CAD
-            - QAR
-            - KWD
-            - PKR
-            - PLN
-            - NZD
-            - HTG
-            - XCD
-            - BGN
-            - ARS
-            - BMD
-            - JPY
-            - RSD
-            - BSD
-            - OMR
-            - SGD
-            - HRK
-            - KPW
-            - PAB
+            - NOK
             - EGP
-            - AFN
+            - IDR
             - RUB
-            - GHC
-            - VEF
-            - SVC
-            - AED
-            - DOP
-            - PHP
-            - MXN
-            - INR
+            - HRK
+            - SCR
+            - KWD
             - GYD
-            - BND
-            - BOB
+            - SAR
+            - NZD
+            - BHD
+            - PEN
+            - LVL
+            - KRW
             - MYR
-            - AZN
+            - ZWD
+            - TRL
+            - DOP
+            - GBP
+            - CAD
+            - BAM
+            - HNL
+            - IMP
             - SYP
             - SRD
-            - KGS
+            - AMD
+            - PHP
+            - KZT
+            - NAD
+            - CUP
             - MKD
             - BWP
-            - NIO
-            - NPR
-            - CNY
-            - JEP
-            - GBP
-            - LBP
-            - EEK
-            - AMD
-            - AWG
-            - IDR
+            - NGN
+            - GHC
             - UYU
-            - SEK
-            - KHR
-            - LKR
-            - BZD
-            - BAM
-            - ILS
-            - PYG
-            - UAH
-            - GGP
-            - KZT
-            - FKP
-            - NOK
-            - ALL
-            - LSL
-            - HKD
-            - NAD
-            - EUR
-            - SHP
-            - TRY
             - SZL
             - KYD
-            - USD
-            - MNT
-            - HNL
-            - BHD
-            - RON
-            - IMP
-            - SCR
-            - THB
-            - COP
+            - AFN
             - CRC
-            - CUP
-            - GTQ
+            - RSD
+            - BZD
             - LTL
-            - AUD
-            - UZS
-            - TTD
-            - MOP
-            - CZK
-            - TRL
-            - BBD
-            - DKK
-            - SBD
-            - CLP
-            - JMD
             - GEL
-            - YER
-            - TWD
-            - MUR
-            - UGX
-            - ISK
-            - LAK
-            - MZN
-            - PEN
-            - IQD
-            - LVL
+            - BSD
+            - LBP
+            - GIP
+            - SVC
+            - NPR
+            - BND
+            - UAH
+            - COP
             - HUF
-            - BYR
+            - MUR
+            - BRL
+            - MNT
+            - GGP
+            - EEK
+            - FKP
+            - SHP
+            - ARS
+            - KHR
+            - ALL
+            - CLP
+            - SEK
+            - EUR
+            - MVR
+            - IRR
+            - RON
             - CHF
-            - SAR
+            - UGX
+            - NIO
+            - LKR
+            - JEP
+            - PAB
+            - AED
+            - KGS
+            - SOS
+            - KPW
+            - LRD
+            - VEF
+            - BMD
+            - XCD
+            - GTQ
+            - ZAR
+            - HTG
+            - AZN
+            - JMD
+            - USD
+            - TRY
+            - OMR
+            - YER
+            - SGD
+            - QAR
+            - SBD
+            - PKR
+            - BOB
+            - AUD
+            - AWG
+            - JPY
+            - LAK
+            - CZK
+            - MZN
+            - PLN
+            - FJD
+            - INR
+            - ILS
+            - BBD
+            - HKD
+            - ISK
+            - MXN
+            - IQD
+            - VND
+            - DKK
+            - TVD
+            - BYR
+            - TWD
+            - THB
+            - PYG
+            - MOP
+            - BGN
+            - ANG
+            - CNY
+            - TTD
+            - LSL
+            - UZS
           title: Account Currency
         account_number:
           type: string
@@ -4048,133 +4066,133 @@ components:
         currency_code:
           type: string
           enum:
-            - LRD
-            - ZAR
-            - SOS
-            - VND
-            - MVR
-            - ANG
-            - IRR
-            - FJD
-            - NGN
-            - ZWD
-            - TVD
-            - KRW
-            - GIP
-            - BRL
-            - CAD
-            - QAR
-            - KWD
-            - PKR
-            - PLN
-            - NZD
-            - HTG
-            - XCD
-            - BGN
-            - ARS
-            - BMD
-            - JPY
-            - RSD
-            - BSD
-            - OMR
-            - SGD
-            - HRK
-            - KPW
-            - PAB
+            - NOK
             - EGP
-            - AFN
+            - IDR
             - RUB
-            - GHC
-            - VEF
-            - SVC
-            - AED
-            - DOP
-            - PHP
-            - MXN
-            - INR
+            - HRK
+            - SCR
+            - KWD
             - GYD
-            - BND
-            - BOB
+            - SAR
+            - NZD
+            - BHD
+            - PEN
+            - LVL
+            - KRW
             - MYR
-            - AZN
+            - ZWD
+            - TRL
+            - DOP
+            - GBP
+            - CAD
+            - BAM
+            - HNL
+            - IMP
             - SYP
             - SRD
-            - KGS
+            - AMD
+            - PHP
+            - KZT
+            - NAD
+            - CUP
             - MKD
             - BWP
-            - NIO
-            - NPR
-            - CNY
-            - JEP
-            - GBP
-            - LBP
-            - EEK
-            - AMD
-            - AWG
-            - IDR
+            - NGN
+            - GHC
             - UYU
-            - SEK
-            - KHR
-            - LKR
-            - BZD
-            - BAM
-            - ILS
-            - PYG
-            - UAH
-            - GGP
-            - KZT
-            - FKP
-            - NOK
-            - ALL
-            - LSL
-            - HKD
-            - NAD
-            - EUR
-            - SHP
-            - TRY
             - SZL
             - KYD
-            - USD
-            - MNT
-            - HNL
-            - BHD
-            - RON
-            - IMP
-            - SCR
-            - THB
-            - COP
+            - AFN
             - CRC
-            - CUP
-            - GTQ
+            - RSD
+            - BZD
             - LTL
-            - AUD
-            - UZS
-            - TTD
-            - MOP
-            - CZK
-            - TRL
-            - BBD
-            - DKK
-            - SBD
-            - CLP
-            - JMD
             - GEL
-            - YER
-            - TWD
-            - MUR
-            - UGX
-            - ISK
-            - LAK
-            - MZN
-            - PEN
-            - IQD
-            - LVL
+            - BSD
+            - LBP
+            - GIP
+            - SVC
+            - NPR
+            - BND
+            - UAH
+            - COP
             - HUF
-            - BYR
+            - MUR
+            - BRL
+            - MNT
+            - GGP
+            - EEK
+            - FKP
+            - SHP
+            - ARS
+            - KHR
+            - ALL
+            - CLP
+            - SEK
+            - EUR
+            - MVR
+            - IRR
+            - RON
             - CHF
-            - SAR
+            - UGX
+            - NIO
+            - LKR
+            - JEP
+            - PAB
+            - AED
+            - KGS
+            - SOS
+            - KPW
+            - LRD
+            - VEF
+            - BMD
+            - XCD
+            - GTQ
+            - ZAR
+            - HTG
+            - AZN
+            - JMD
+            - USD
+            - TRY
+            - OMR
+            - YER
+            - SGD
+            - QAR
+            - SBD
+            - PKR
+            - BOB
+            - AUD
+            - AWG
+            - JPY
+            - LAK
+            - CZK
+            - MZN
+            - PLN
+            - FJD
+            - INR
+            - ILS
+            - BBD
+            - HKD
+            - ISK
+            - MXN
+            - IQD
+            - VND
+            - DKK
+            - TVD
+            - BYR
+            - TWD
+            - THB
+            - PYG
+            - MOP
+            - BGN
+            - ANG
+            - CNY
+            - TTD
+            - LSL
+            - UZS
           title: Currency Code
-          example: LRD
+          example: NOK
         delivery_note_number:
           type: string
           title: Delivery Note Number
@@ -4516,7 +4534,9 @@ components:
       in: header
 security:
   - ClientId: []
-    Authorization: []
+  - Authorization: []
+  - Signature: []
+  - Timestamp: []
 tags:
   - name: documents
     description: Process and manage documents
