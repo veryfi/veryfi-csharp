@@ -5464,10 +5464,10 @@ components:
           title: Parse Address
           description: Whether to break addresses into components. Adds ['parsed_address'] to response
           default: false
-        enrich:
+        compute:
           type: boolean
-          title: Enrich
-          description: Whether to use additional calculation e.g. for line_items.quantity or enrichment for vendor
+          title: Compute
+          description: Whether to use additional calculation e.g. e.g. for line_items.quantity
           default: true
       additionalProperties: false
       type: object
