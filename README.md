@@ -1,6 +1,5 @@
 # Veryfi C# Client Library
 
-![Veryfi Logo](https://cdn.veryfi.com/logos/veryfi-logo-wide-github.png)
 
 [![Language](https://img.shields.io/badge/language-C%23-blue.svg?style=flat-square)](https://github.com/veryfi/veryfi-csharp/search?l=C%23&o=desc&s=&type=Code) 
 [![License](https://img.shields.io/github/license/veryfi/veryfi-csharp.svg?label=License&maxAge=86400)](LICENSE) 
