@@ -34,8 +34,31 @@ using Veryfi;
 using var client = new HttpClient();
 var api = new VeryfiApi("username", "apiKey", "clientId", client);
 
+// Get Documents
+var documentsResponse = await api.DocumentsAsync();
+
+// Process Document URL.
+var documentResponse = await api.Documents2Async(
+    new DocumentPOSTJSONRequest
+    {
+        File_url = url
+    });
+
+// Process Document Base64
+var documentResponse = await api.Documents2Async(
+    new DocumentPOSTJSONRequest
+    {
+        File_name = file.FileName,
+        File_data = Convert.ToBase64String(file.AsBytes()),
+    });
+```
+
+## Usage V7
+
+```cs
+
 // Process Base64
-var document = await api.ProcessDocumentAsync(
+var document = await api.ProcessDocumentAsyncV7(
     new DocumentUploadOptions
     {
         File_name = "fileName.jpg",
@@ -43,14 +66,14 @@ var document = await api.ProcessDocumentAsync(
     });
 
 // Process url
-var document = await api.ProcessDocumentAsync(
+var document = await api.ProcessDocumentAsyncV7(
     new DocumentUploadOptions
     {
         File_url = "https://raw.githubusercontent.com/veryfi/veryfi-csharp/master/src/tests/Veryfi.IntegrationTests/Assets/receipt_public.jpg",
     });
 
 // Process urls
-var document = await api.ProcessDocumentAsync(
+var document = await api.ProcessDocumentAsyncV7(
     new DocumentUploadOptions
     {
         File_urls = new [] {
@@ -59,7 +82,7 @@ var document = await api.ProcessDocumentAsync(
     });
 
 // Process stream
-var document = await api.ProcessDocumentFileAsync(
+var document = await api.ProcessDocumentFileAsyncV7(
     new Stream(),
     new DocumentUploadOptions
     {
@@ -67,7 +90,7 @@ var document = await api.ProcessDocumentFileAsync(
     });
 
 // Process bytes
-var document = await api.ProcessDocumentFileAsync(
+var document = await api.ProcessDocumentFileAsyncV7(
     new byte[0],
     new DocumentUploadOptions
     {
@@ -75,7 +98,7 @@ var document = await api.ProcessDocumentFileAsync(
     });
 
 // Process path
-var document = await api.ProcessDocumentFileAsync(
+var document = await api.ProcessDocumentFileAsyncV7(
     "C:/invoice.png",
     new DocumentUploadOptions
     {
