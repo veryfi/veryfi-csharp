@@ -49,7 +49,7 @@ var documentResponse = await api.Documents2Async(
     new DocumentPOSTJSONRequest
     {
         File_name = file.FileName,
-        File_data = Convert.ToBase64String(file.AsBytes()),
+        File_data = Convert.ToBase64String(file.AsBytes())
     });
 ```
 
