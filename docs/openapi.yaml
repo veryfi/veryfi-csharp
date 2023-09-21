@@ -2040,6 +2040,7 @@ components:
             - fuel
             - discount
             - payment
+          nullable: true
           title: Type
           description: A line type predicted from Veryfi list, e.g. food
           example: room
@@ -2405,6 +2406,7 @@ components:
             - fuel
             - discount
             - payment
+          nullable: true
           title: Type
           description: A line type predicted from Veryfi list, e.g. food
           example: room
@@ -2768,6 +2770,7 @@ components:
             - fuel
             - discount
             - payment
+          nullable: true
           title: Type
           description: A line type predicted from Veryfi list, e.g. food
           example: room
@@ -2826,6 +2829,7 @@ components:
             - fuel
             - discount
             - payment
+          nullable: true
           title: Type
           description: A line type predicted from Veryfi list, e.g. food
           example: room
@@ -3826,6 +3830,7 @@ components:
             - fuel
             - discount
             - payment
+          nullable: true
           title: Type
           description: A line type predicted from Veryfi list, e.g. food
           example: room
