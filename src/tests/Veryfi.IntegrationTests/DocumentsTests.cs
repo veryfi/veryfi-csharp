@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -245,12 +246,15 @@ namespace Veryfi.IntegrationTests
             await BaseTests.ApiTestAsync(async (api, cancellationToken) =>
             {
                 string[] categories = { "Meals", "Fat" };
+                var tags = new List<string> { "TAG" };
+                
                 var documentResponse = await api.Documents2Async(
                     new DocumentPOSTJSONRequest
                     {
                         File_name = file.FileName,
                         File_data = Convert.ToBase64String(file.AsBytes()),
-                        Categories = categories
+                        Categories = categories,
+                        Tags = tags
                     },
                     cancellationToken);
                 
