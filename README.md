@@ -53,61 +53,6 @@ var documentResponse = await api.Documents2Async(
     });
 ```
 
-## Usage V7
-
-```cs
-
-// Process Base64
-var document = await api.ProcessDocumentAsyncV7(
-    new DocumentUploadOptions
-    {
-        File_name = "fileName.jpg",
-        File_data = Convert.ToBase64String(bytes),
-    });
-
-// Process url
-var document = await api.ProcessDocumentAsyncV7(
-    new DocumentUploadOptions
-    {
-        File_url = "https://raw.githubusercontent.com/veryfi/veryfi-csharp/master/src/tests/Veryfi.IntegrationTests/Assets/receipt_public.jpg",
-    });
-
-// Process urls
-var document = await api.ProcessDocumentAsyncV7(
-    new DocumentUploadOptions
-    {
-        File_urls = new [] {
-            "https://raw.githubusercontent.com/veryfi/veryfi-csharp/master/src/tests/Veryfi.IntegrationTests/Assets/receipt_public.jpg",
-        },
-    });
-
-// Process stream
-var document = await api.ProcessDocumentFileAsyncV7(
-    new Stream(),
-    new DocumentUploadOptions
-    {
-        File_name = "fileName.jpg",
-    });
-
-// Process bytes
-var document = await api.ProcessDocumentFileAsyncV7(
-    new byte[0],
-    new DocumentUploadOptions
-    {
-        File_name = "fileName.jpg",
-    });
-
-// Process path
-var document = await api.ProcessDocumentFileAsyncV7(
-    "C:/invoice.png",
-    new DocumentUploadOptions
-    {
-        // any custom options, File_name is not required.
-    });
-
-//
-```
-
 ## Live Example
 
 C# .NET Fiddle - https://dotnetfiddle.net/voU3yG  
