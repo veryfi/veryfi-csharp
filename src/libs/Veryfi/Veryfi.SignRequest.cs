@@ -46,17 +46,13 @@ namespace Veryfi
                         var value = item.Value;
                         if (value == null) continue;
                         string stringValue;
-                        switch (key)
+                        if (value is JArray)
                         {
-                            case "categories":
-                                stringValue = string.Join(",", value);
-                                break;
-                            case "file_urls":
-                                stringValue = string.Join(",", value);
-                                break;
-                            default:
-                                stringValue = (string) value!;
-                                break;
+                            stringValue = string.Join(",", value);
+                        }
+                        else
+                        {
+                            stringValue = (string) value!;
                         }
                         arguments.Add(key, stringValue);
                     }
