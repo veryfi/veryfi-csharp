@@ -5473,7 +5473,7 @@ components:
       type: object
       title: DocumentPOSTJSONRequest
       example:
-        file_url: https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg
+        file_url: https://samples.veryfi.com/receipt.jpg
         auto_delete: true
     DocumentPOSTMultipartRequest:
       properties:
@@ -5577,7 +5577,7 @@ components:
       type: object
       title: DocumentPOSTMultipartRequest
       example:
-        file_url: https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg
+        file_url: https://samples.veryfi.com/receipt.jpg
         auto_delete: true
     TaxLinePUTParameters:
       properties:
