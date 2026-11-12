@@ -5469,6 +5469,13 @@ components:
           title: Compute
           description: Whether to use additional calculation e.g. e.g. for line_items.quantity
           default: true
+        thinking:
+          type: string
+          enum:
+            - light
+            - deep
+          title: Thinking
+          description: 'Thinking mode for line-item extraction. `light`: Quick reasoning for everyday extraction. `deep`: More extensive reasoning for complex or ambiguous documents. Omit / null: off. Needs thinking mode enabled for your account.'
       additionalProperties: false
       type: object
       title: DocumentPOSTJSONRequest
