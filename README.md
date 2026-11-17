@@ -53,6 +53,17 @@ var documentResponse = await api.Documents2Async(
     });
 ```
 
+Run thinking on the line items with `Thinking` (`Light` or `Deep`; leave it `null` to turn it off). `Deep` takes longer than `Light`. It only takes effect if thinking mode is enabled for your account.
+
+```cs
+var documentResponse = await api.Documents2Async(
+    new DocumentPOSTJSONRequest
+    {
+        File_url = url,
+        Thinking = DocumentPOSTJSONRequestThinking.Light
+    });
+```
+
 ## Live Example
 
 C# .NET Fiddle - https://dotnetfiddle.net/voU3yG  
